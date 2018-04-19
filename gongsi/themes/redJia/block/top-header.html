@@ -1,0 +1,95 @@
+<div class="top_nav">
+    <div class="mainwd">
+        <div class="lt nav_city">
+        	<span class="jiaIcon jiaIcon_city"></span><b><{$request.city.city_name}></b><{if $CONFIG.site.multi_city}><a href="<{link ctl='city' http='www'}>" class="fontcl2">切换</a><{/if}>
+        </div>
+        <div class="rt">
+        	  <{if $MEMBER.uid}>
+            <ul class="top_nav_login hoverno lt">
+                <li>
+                    <a href="<{link ctl='ucenter/member:index'}>" class="title">个人中心<span class="ico_list login_litico"></span></a>
+                    <div class="top_nav_login_son">
+                        <a href="<{link ctl='ucenter/member:index'}>">个人中心</a>
+                        <a href="<{link ctl='ucenter/member/diary:index'}>">装修日记</a>
+                        <a href="<{link ctl='ucenter/member/ask:index'}>">装修问答</a>
+                        <a href="<{link ctl='ucenter/member/yuyue:tenders'}>">我的招标</a>
+                        <a href="<{link ctl='ucenter/member/yuyue:company'}>">我的预约</a>
+                        <a href="<{link ctl='passport:loginout'}>">退出</a>
+                    </div>
+                </li>
+                <{if $MEMBER.from == 'company'}>
+                <li>
+                    <a href="<{link ctl='ucenter/company:index'}>" class="title">公司管理<span class="ico_list login_litico"></span></a>
+                    <div class="top_nav_login_son">
+                        <a href="<{link ctl='ucenter/company:info'}>">公司设置</a>
+                        <a href="<{link ctl='ucenter/company/case:index'}>">案例管理</a>
+                        <a href="<{link ctl='ucenter/company/youhui:index'}>">优惠信息</a>
+                        <a href="<{link ctl='ucenter/company/yuyue:company'}>">预约管理</a>
+                    </div>
+                </li>
+                <{elseif $MEMBER.from == 'shop'}>
+                <li>
+                    <a href="<{link ctl='ucenter/shop:index'}>"  class="title">商铺管理<span class="ico_list login_litico"></span></a>
+                    <div class="top_nav_login_son">
+                        <a href="<{link ctl='ucenter/shop:info'}>">商铺设置</a>
+                        <a href="<{link ctl='ucenter/shop/order:index'}>">订单管理</a>
+                        <a href="<{link ctl='ucenter/shop/yuyue:shop'}>">预约管理</a>
+                    </div>
+                </li>
+                <{/if}>
+                <li><a href="<{link ctl='passport:loginout'}>">退出</a></li>
+            </ul>
+            <{else}>
+                <a target="_blank" href="<{link ctl='passport'}>" mini-login="login">登录</a>  
+                <a target="_blank" href="<{link ctl='passport:reg'}>">注册</a>
+            <{/if}>
+             <a href="<{link ctl='app'}>">手机版</a>
+            <a href="<{link ctl='trade/cart'}>">装修公司合作</a>
+             <font  class="tp_contactus"><a href="javascript:void(0)" class="over ">客户服务<span class="login_ico con_ico"></span></a>
+                <div class="tp_contactus_box">
+                    <p class="tel">装修热线：<font class="fontcl1"><{$CONFIG.site.phone}></font></p>
+                    <ul class="tpService">
+                        <li>
+                            <span class="login_ico tpSer1"></span>
+                            <p><a href="<{link ctl="tenders"}>">免费招标</a></p>
+                        </li>
+                        <li>
+                            <span class="login_ico tpSer2"></span>
+                            <p><a href="<{link ctl="zxb"}>">装修保</a></p>
+                        </li>
+                        <li>
+                            <span class="login_ico tpSer3"></span>
+                            <p><a href="<{link ctl='about:about'}>">关于我们</a></p>
+                        </li>
+                    </ul>
+                    <div class="cl"></div>
+                    <div class="cont_bt">
+                    <img src="http://www.dt0352.cn/themes/weixin.jpg" class="cont_ewm lt"/>
+                    <p class="lt bt">扫描二维码  关注官方微信</p>
+                    </div>
+                </div>
+            </font>
+            <font>网站热线：<b class="fontcl1"><{$CONFIG.site.phone}></b></font>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {	
+    //头部登录后效果
+    $(".top_nav_login li").mouseover(function(){
+        $(this).find('.top_nav_login_son').show();
+    }).mouseout(function(){
+        $(this).find('.top_nav_login_son').hide();
+    }); 
+    
+    $("font.tp_contactus ").mouseover(function(){
+        $(this).find('a.over').addClass('on');
+        $('font.tp_contactus ').find('.tp_contactus_box').show();
+        $('font.tp_contactus ').find('span.con_ico').addClass('con_ico_over');
+    }).mouseout(function(){
+        $(this).find('a.over').removeClass('on');
+        $('font.tp_contactus ').find('.tp_contactus_box').hide();
+        $('font.tp_contactus ').find('span.con_ico').removeClass('con_ico_over');
+    });
+})
+</script>

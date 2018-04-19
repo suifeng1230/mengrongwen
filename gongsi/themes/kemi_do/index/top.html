@@ -1,0 +1,429 @@
+<link rel="stylesheet" type="text/css" href="/css/new_global.css">
+<link rel="stylesheet" type="text/css" href="/css/common_tender_pop.css">
+<script type="text/javascript">   
+
+    //公共发标弹窗调用
+    jq(document).ready(function(){
+        //之前没弹过可触发 当前页面不能出现弹框时 没有发标成功时
+        if (getCookie('company_index_y') != 'true' && getCookie('com_pop_flag') == 'true' && getCookie('zxzx_correlation_Flag') != 'true') {
+            setTimeout(function(){
+                document.getElementById('ico-consult1').click();
+                setCookie('company_index_y','true',365*24*60*60*1000);//设置限制cookie
+                if (jq('.ico-consult').length >=2) {
+                    jq('.ico-consult').eq(1).addClass('ico-consult-saffron');//增加class 替换在线咨询图片   
+                };
+                (typeof clickStream !== 'undefined') && clickStream.getCvParams('1_5_1_1246');
+            },3000)
+        };
+    })
+</script>
+
+<div id="window_box" class="window_box" style="display: block;position: fixed; z-index: 999999999999; overflow: visible; border-radius: 0px; left: -490px;margin-left: 50%; top: 30%; width: 980px; height: auto;">
+<div class="window_box_title" style="display: block; position: absolute;">
+  <span></span>
+  <em></em>
+  <a href="javascript:void(0)" id="box_close" class="window_box_close"></a>
+</div>
+<div class="window_box_container ">
+  <div class="clear tender-pop">
+    <ul class="tender-pop-tabs">
+      <li id="act1" class="active">
+        <span>免费报价</span></li>
+      <li id="act2" class="">
+        <span>免费设计</span></li>
+    </ul>
+    <div class="tender-pop-main">
+      <div class="tender-pop-con clear add-weixin-html" id="acti1" style="display: block;">
+        <div class="tender-pop-mfbj tender-pop-left">
+          <h6 class="tender-pop-title"><{$CONFIG.site.title}>在线报价</h6>
+          <p class="tender-pop-applypeople">今天已有
+            <span class="num-man"><{$COUNT.tenders*3+$COUNT.tenders}></span>位业主获取了装修预算</p>
+          <form action="/tenders-save.html" id='tenders-forms' method="post">
+		  <input type="hidden" name="data[from]" value="TBJ" /> 
+            <ul class="tender-form-list">
+			<li class="tender-form-item">
+                姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span class="worn-font">*</span>
+				<input type="text" name="data[contact]" value="" class="text area" style="margin-left: 3px;" placeholder="请输入您的姓名" />
+              </li>
+              <li class="tender-form-item">所在城市：<span class="worn-font">*</span>
+                <{widget id="data/region" province_id=$detail.province_id city_id=$detail.city_id area_id=$detail.area_id class="text cy"}>
+              </li>
+              <li class="tender-form-item">房屋面积：<span class="worn-font">*</span>
+                <input type="text" id='mjs' class="text area" name="data[mj]" value=""  placeholder="请输入面积"/>
+                <em class="tender-form-sup" style="right: 150px;">m²</em></li>
+              <li class="tender-form-item">房屋户型：
+                <span class="worn-font">*</span>
+                <div class="clear" style="display: inline-block;">
+                  <select name="data[style_id]"  class="text">
+				<{foreach from=$setting[$type['style']] item=item key=key}>
+                        <option <{if $detail.style_id == $key}> selected="selected" <{/if}> value="<{$key}>"><{$item}></option>
+                <{/foreach}>
+			</select>
+			<input type="radio" class="radio" name="data[level]" value="1"/>简装<input type="radio" class="radio" checked="checked" name="data[level]" value="2"/>精装<input type="radio" class="radio" name="data[level]" value="3"/>豪装
+                </div>
+              </li>
+              <li class="tender-form-item">
+                <label for="" class="pop-label">
+                  <em class="pop-label-start">*</em>手机号码：</label>
+                <div class="pop-element">
+                  <div class="pop-text-wrap">
+                    <input type="text" name="data[mobile]" value="" class="text area" style="margin-left: 9px;" placeholder="请输入您的手机号码" />
+                    <span class="tender-form-font price-font" style="display:block;position: relative;left:0">我们将发送预算明细到您的手机</span></div>
+                </div>
+              </li>
+              <li class="tender-form-item tender-form-footer" style="">
+                <p class="tender-form-explain">*为了您的权益，您的隐私将被严格保密</p></li>
+            </ul>
+          <a href="javascript:void(0);" id="priceBtn" onclick="getResults()" class="tender-pop-buttom tender-calc-btn" data-ptag="1_1_1_984">
+          <span class="tender-recalc">开始计算</span></a>
+        </div>
+		 </form>
+        <div class="tender-pop-mfbj tender-pop-right" id="show_results">
+		<script>
+function getResults(){
+
+	Widget.MsgBox.load("数据处理中。。。");
+	var ident = $("tenders-forms");
+    $.post("<{link ctl='tenders:save' http='base'}>", $("#tenders-forms").serialize(), function(ret){
+        if(ret.error){
+            Widget.MsgBox.error(ret.message.join(","));
+			//alert("计算出错");
+        }else{
+            $("#"+ident).html($("#tenders_ok").html());
+			//alert("提交成功");
+            if(ret.wx_tenders_qr){
+                $("[lay='"+ident+"'] .erweima_box img").attr("src", ret.wx_tenders_qr);
+                $("[lay='"+ident+"'] .erweima_box").show();
+            }
+			Widget.MsgBox.hide();
+        }       
+    }, 'json');
+
+	var mj = $('#mjs').val();
+	if(mj){
+		Widget.MsgBox.load("正在为您计算中...")
+		var link = "/index.php?index-get_price-#mj.html";
+		$("#show_results").load(link.replace("#mj", mj), function(){Widget.MsgBox.hide();});
+	}else{
+		Widget.MsgBox.load("请填写建筑面积");
+	}
+}
+</script> 
+          <h6 class="tender-pop-title littlefont">
+            <em class="price-result-title">您家的装修预算为：</em>
+            <span class="tender-title-count" id="show4">?</span>
+            <em class="tender-title-text">万元</em></h6>
+          <div class="tender-price-result-box" id="tender-price-result-box">
+
+
+		  <script type="text/javascript">
+        var t = 300; //在这里设置刷新时间，单位是毫秒，比如1秒钟就是1000
+        var min = 1000; //生成的最小的数字，比如200
+        var max = 999999; //生成的最大的数字，比如500
+        var ctl_id = "show"; //要在哪个控件中显示，比如例子中的"show"
+		var ctl_id1 = "show1"; //要在哪个控件中显示，比如例子中的"show"
+		var ctl_id2 = "show2"; //要在哪个控件中显示，比如例子中的"show"
+		var ctl_id3 = "show3"; //要在哪个控件中显示，比如例子中的"show"
+		var ctl_id4 = "show4"; //要在哪个控件中显示，比如例子中的"show"
+        
+        function Refresh() {
+            document.getElementById(ctl_id).innerHTML = parseInt(Math.random() * (max - min + 1) + min);
+        }
+		function Refresh1() {
+            document.getElementById(ctl_id1).innerHTML = parseInt(Math.random() * (max - min + 1) + min);
+        }
+		function Refresh2() {
+            document.getElementById(ctl_id2).innerHTML = parseInt(Math.random() * (max - min + 1) + min);
+        }
+		function Refresh3() {
+            document.getElementById(ctl_id3).innerHTML = parseInt(Math.random() * (max - min + 1) + min);
+        }
+		function Refresh4() {
+            document.getElementById(ctl_id4).innerHTML = parseInt(Math.random() * (max - min + 1) + min);
+        }
+    </script>
+
+            <ul class="tender-price-result">
+              <li class="hotad-cl">
+                <span>材料费：</span>
+                <strong id="priceMterials">
+                  <em id="show">？</em>元</strong></li>
+              <li class="hotad-rg">
+                <span>人工费：</span>
+                <strong id="priceArtificial">
+                  <em id="show1">？</em>元</strong></li>
+              <li class="hotad-sj">
+                <span>设计费：</span>
+                <strong id="priceDesign">
+                  <em id="show2">？</em>元</strong></li>
+              <li class="hotad-zj">
+                <span>质检费：</span>
+                <strong id="priceQuality">
+                  <em id="show3">？</em>元</strong></li>
+            </ul>
+            <div class="pop-hotad-result" style="display:block;height:auto;margin-left:50px;font-size:24px;">
+              <p style="font-size: 16px; margin: 25px;">如果需要查看详细报价请点击<a href="/price.html"><此处></a></p>
+             <!--  <p class="call-phone">稍后装修管家将致电您，为您提供免费装修咨询服务</p> --></div>
+          </div>
+          <div class="tender-price-ad">
+            <p>
+            </p>
+          </div>
+
+        </div>
+      </div>
+	  
+      <div class="tender-pop-con clear" id="acti2" style="display: none;">
+        <div class="tender-pop-mfsj tender-pop-left">
+          <div class="tender-init-mfsj">
+            <h6 class="tender-pop-title">免费户型设计</h6>
+            <form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form2' method="post">
+			<input type="hidden" name="data[from]" value="TZX1" />
+              <ul class="tender-form-list">
+                <li class="tender-form-item">所在城市：
+                  <span class="worn-font">*</span>
+                  <{widget id="data/region" province_id=$detail.province_id city_id=$detail.city_id area_id=$detail.area_id class="text cy"}>
+                </li>
+                <li class="tender-form-item">您的称呼：
+                  <span class="worn-font">*</span>
+                  <input type="text" class="tender-form-input" name="data[contact]" id="designName" name="chenghu" placeholder="请输入您的称呼">
+                <li class="tender-form-item">手机号码：
+                  <span class="worn-font">*</span>
+                  <input type="text" class="tender-form-input" name="data[mobile]" id="designPhone" name="phone" placeholder="填写手机号，抢免费设计名额">
+                <li class="tender-form-item tender-form-footer">
+                  <div class="tender-form-check">
+                    <input type="checkbox" class="tender-input-check design-check" checked="checked">
+                    <span>我已阅读并接受
+                      <a href="#" target="_blank">《装修常见问题条款》</a></span>
+                  </div>
+                 
+                    <input type="button" value="免费申请" mini-tenders="tenders-form2" class="btn_sub_apply btn" style="margin-top: 15px;" />
+                  <p class="tender-form-explain">*为了您的权益，您的隐私将被严格保密</p></li>
+              </ul>
+            </form>
+          </div>
+          <div class="tender-result-mfsj dn">
+            <h6 class="tender-pop-title">申请成功！</h6>
+            <ul class="tender-form-list">
+              <li class="tender-form-item">
+                <p class="tender-result-text">您同时还获得
+                  <span>1项增值服务</span></p>
+              </li>
+              <li class="tender-form-item">
+                <em class="mflf"></em>
+              </li>
+              <li class="tender-form-item">
+                <p class="tender-result-explain holiday-text">*稍后装修管家将致电您，为您提供免费装修咨询服务。</p></li>
+            </ul>
+          </div>
+        </div>
+        <div class="tender-pop-mfsj tender-pop-right">
+          <div class="tender-mfsjinit-img">
+            <em></em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="translucence_layer" id="translucence_layer" style="display: block;"></div>
+
+
+
+<div class="index_banner">
+        <div class="col_l">
+            <div class="sec_topr_bd">
+                <ul class="sec_topr_tab">
+                    <li class="on"><a href="javascript:;">免费<br>设计</a></li>
+                    <li><a href="javascript:;">免费<br>报价</a></li>
+                    <li><a href="javascript:;">免费<br>预算</a></li>
+					<li><a href="javascript:;">软装<br>预约</a></li>
+                </ul>
+                <i class="index_ico_arrow"></i>
+                <div class="sec_topr_form index_form">
+                    <div class="form_hd">
+                        <p>10秒登记，免费获取3份专业设计方案</p>
+                        <p style="display:none;">3套报价对比，获取更靠谱方案，拒绝超预算</p>
+                        <p style="display:none;">专业监理免费上门，按照行业标准严格验收</p>
+						<p style="display: none;">小区同批验房须达到10户，可安排免费验房</p>
+                    </div>
+                    <form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form1' method="post">
+                    <input type="hidden" name="data[from]" value="TZX" />
+                    <div class="form_line">
+                      <input type="text" name="data[contact]" value="" class="text outcontrol" placeholder="请输入您的姓名"/>
+                    </div>
+                    <div class="form_line">
+                      <input type="text" name="data[mobile]" value="" class="text outcontrol"  placeholder="请输入您的手机号码" />
+                    </div>
+                    <div class="form_line">
+                      <{widget id="data/region" city_id=$data.city_id|default:$request.city_id class="texts short"}>
+                    </div>
+                    	<input type="button" value="免费申请" mini-tenders="tenders-form1" class="btn_sub_apply btn" />
+                    </form>
+                </div>
+            </div> 
+        </div>     
+<script>
+var jq = jQuery.noConflict();
+var sepcilText = jq('.sec_topr_form input:text');
+    jq('ul.sec_topr_tab').on('click', 'li', function() {
+        var leftArr = [28, 98, 168,238],
+            tip = jq('.sec_topr_form > .form_hd > p'),
+            idx = jq(this).index() || 0;
+        jq(this).addClass('on').siblings().removeClass('on');
+        jq('i.index_ico_arrow').css('left', leftArr[idx] + 'px');
+        tip.hide().eq(idx).show(); 
+        sepcilText.eq(0).trigger('click').focus();  
+    })(jq);
+</script>
+    <div class="index_lunz rt">
+    <div class="banner_lunz lt"><{adv name="柯米-仿土巴兔首页幻灯片" city_id=$request.city_id}></div>
+    <div class="lunbo_rt">
+    	<div class="ad"><{adv name="柯米-仿土巴兔形象代言广告位" city_id=$request.city_id}></div>
+        <div class="lunbo_bt">
+        	<a class="sec_top_brand2" target="_blank">
+                <i class="iconfont index_ico_brand">&#xe612;</i><font>96%业主好评</font>
+                <em>&gt;</em>
+                <p>在装修网找公司价格实惠、有保障</p>
+            </a>
+            <a class="sec_top_brand3" target="_blank" rel="nofollow">
+                <i class="iconfont index_ico_brand">&#xe611;</i><font>99%用心服务</font>
+                <em>&gt;</em>
+                <p>我们 · 每天为筑没好居住环境而奋斗</p>
+            </a>
+        </div>
+    </div>
+	<div class="cl"></div>
+    </div>
+</div>
+<div class="mainwd mb20 lt">
+		<div class="lt sec_topr_list hoverno">
+			<ul>
+				<li>
+					<a href="<{link ctl='tenders'}>"><span class="iconfont font40">&#xe618;</span>
+					<p>免费设计</p>
+					</a>
+				</li>
+				<li>
+					<a href="<{link ctl='tenders'}>"><span class="iconfont font40">&#xe62b;</span>
+					<p>免费报价</p>
+					</a>
+				</li>
+				<li>
+					<a href="<{link ctl='tenders'}>"><span class="iconfont font40">&#xe62d;</span>
+					<p>免费预算</p>
+					</a>
+				</li>
+				<li class="third">
+					<a href="<{link ctl='tenders'}>"><span class="iconfont font40">&#xe61a;</span>
+					<p>售后服务</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+        <div class="banner_lunz_bottom">
+                <ul class="banner-ul">
+                    <li class="ico1">
+                        <a href="<{link ctl='tenders'}>">
+                            <div class="img banner-bot-img1"></div>
+                            <div class="info">
+                                <p class="tit">省心、省力、省钱</p>
+                                <p class="des">全程6大免费服务</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="ico2">
+                        <a href="<{link ctl='index'}>tools-items.html">
+                            <div class="img banner-bot-img2"></div>
+                            <div class="info">
+                                <p class="tit">免费计算报价</p>
+                                <p class="des">预算看不懂，我帮你</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="ico3">
+                        <a href="<{link ctl='tenders'}>">
+                            <div class="img banner-bot-img3"></div>
+                            <div class="info">
+                                <p class="tit">装修网施工保</p>
+                                <p class="des">装修界的安全卫士</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="ico4">
+                        <a href="<{link ctl='tenders'}>">
+                            <div class="img banner-bot-img4"></div>
+                            <div class="info">
+                                <p class="tit">装修分期</p>
+                                <p class="des">帮你搞定装修资金</p>
+                            </div>
+                        </a>
+                    </li>	        		        		        	
+                </ul>
+            </div>
+		<div class="cl"></div>
+	</div>
+<script type="text/tmpl" id="tenders_ok">
+    <div class="menu_list_ok_top">
+		<h1 class="fontcl2">
+			恭喜您，申请成功！</h1>
+		<p><{$CONFIG.site.title}>客服将于24小时内与您联系！</p>
+		<div class="menu_ok_link">
+			<ul>
+				<li>
+					<a href="<{link ctl='zxb'}>">
+					<span class="link_ico link_ico1 lt"></span>
+					<div class="lt">
+						<p class="title">装修保<font class="graycl">/装修界的支付宝</font></p>
+					</div>
+					</a>
+				</li>
+				<li>
+					<a href="<{link ctl='app'}>">
+					<span class="link_ico link_ico2 lt"></span>
+					<div class="lt">
+						<p class="title">手机端<font class="graycl">/随时随地装修</font></p>
+						<p></p>
+					</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+</script>
+
+<script type="text/javascript">
+(function(K, $){
+	Refresh();
+            setInterval("Refresh();", t);
+			setInterval("Refresh1();", t);
+			setInterval("Refresh2();", t);
+			setInterval("Refresh3();", t);
+			setInterval("Refresh4();", t);
+$("[mini-tenders]").click(function(){
+    Widget.MsgBox.load("数据处理中。。。");
+    var ident = $(this).attr("mini-tenders");
+    $.post("<{link ctl='tenders:save' http='base'}>", $("#"+ident).serialize(), function(ret){
+        if(ret.error){
+            Widget.MsgBox.error(ret.message.join(","));
+        }else{
+            $("#"+ident).html($("#tenders_ok").html());
+            if(ret.wx_tenders_qr){
+                $("[lay='"+ident+"'] .erweima_box img").attr("src", ret.wx_tenders_qr);
+                $("[lay='"+ident+"'] .erweima_box").show();
+            }
+			Widget.MsgBox.hide();
+        }       
+    }, 'json');
+});
+})(window.KT, window.jQuery);
+</script>
+<script>
+$("[verify]").click(function(){
+	$($(this).attr("verify")).attr("src", "index.php?magic-verify&_"+Math.random());
+});
+</script>
+

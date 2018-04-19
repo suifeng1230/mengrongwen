@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<adv name="红色齐家模板首页导航下的轮播广告" from="lunzhuan" width="620" height="400"></adv>
+	<adv name="红色齐家模板首页通栏广告ad1" from="photo" width="1200" height="70"></adv>
+	<adv name="红色齐家模板首页通栏广告ad2" from="photo" width="1200" height="70"></adv>
+	<adv name="红色齐家模板首页通栏广告ad3" from="photo" width="1200" height="70"></adv>
+	<adv name="红色齐家模板首页通栏广告ad4" from="photo" width="1200" height="70"></adv>
+	<adv name="红色齐家模板首页买建材图片广告" from="photo" width="300" height="300"></adv>
+	<adv name="红色齐家模板首页买家居图片广告" from="photo" width="300" height="300"></adv>
+	<adv name="红色齐家模板首页学装修图片广告" from="lunzhuan" width="345" height="280"></adv>
+	<adv name="红色齐家模板首页行业资讯图片广告" from="photo" width="320" height="260"></adv>
+	<block name="红色齐家模板首页买建材商品" from="product" type="default"></block>
+	<block name="红色齐家模板首页买建材商家" from="shop" type="default"></block>
+	<block name="红色齐家模板首页买家具商品" from="product" type="default"></block>
+	<block name="红色齐家模板首页买家具商家" from="shop" type="default"></block>
+	<block name="红色齐家模板首页热门案例" from="case" type="default"></block>
+	<block name="红色齐家模板首页装修日记" from="diary" type="default"></block>
+	<block name="红色齐家模板首页装修学堂" from="article" type="default"></block>
+	<block name="红色齐家模板首页知识问答" from="ask" type="default"></block>
+	<block name="红色齐家模板首页热点资讯" from="article" type="default"></block>
+	<block name="红色齐家模板首页行业资讯-列表模式" from="article" type="default"></block>
+</config>

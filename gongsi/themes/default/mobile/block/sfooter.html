@@ -1,0 +1,22 @@
+<script type="text/javascript">
+(function(K, $){
+$(document).ready(function(){
+$(".content img").each(function(){
+    $(this).load(function(){
+        if($(this).width()>$(window).width()){
+            $(this).attr("width","100%");
+        }           
+    }); 
+});
+});
+})(window.KT, window.jQuery)
+</script>
+<!-- <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?500c8dd1e61e7ea415270e05493abde7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>  -->

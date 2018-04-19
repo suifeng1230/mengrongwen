@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <adv name="红色热情模板首页导航下的轮播广告" from="lunzhuan" width="660" height="300"></adv>
+	<adv name="红色热情模板首页通栏广告" from="photo" width="1200" height="80"></adv>
+</config>

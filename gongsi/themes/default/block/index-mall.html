@@ -1,0 +1,34 @@
+
+			<div class="index_nav_lt" style='    height: 480px;'>
+				<div class="inl_name">主题市场<i></i></div>
+			</div>
+<div class="mall_cate">
+	<ul>
+	<{calldata  mdl='shop/cate' limit="5"}>
+	   <li class="cate1">
+			<span><em class="icon<{$iteration}>"></em><{$item.title}><i></i></span>
+			<div class="div1" style="display: none;">
+			   <{calldata mdl="shop/cate" parent_id=$item.cat_id  limit="18"}><div class="bigclass">
+					<a href="<{link ctl="mall/product" arg0=$item.cat_id arg1=1}>"><{$item.title}></a></div>
+					<div class="smallclass">
+						<{calldata mdl="shop/cate" parent_id=$item.cat_id  limit="18"}>
+							<a href="<{link ctl="mall/product" arg0=$item.cat_id arg1=1}>"><{$item.title}></a>
+						<{/calldata}>
+					</div>
+			   <{/calldata}>
+			</div>
+		</li>
+	<{/calldata}>
+	</ul>
+<script>
+$(document).ready(function(){
+	 $(".mall_cate ul li").mouseover(function(){
+		 $(this).find(".cate1").addClass('current');
+		 $(this).find(".div1").show();
+	 }).mouseleave(function(){
+		 $(this).find(".cate1").removeClass('current');
+		 $(this).find(".div1").hide();
+	 });
+ });	
+</script>
+</div>

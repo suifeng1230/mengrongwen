@@ -1,0 +1,126 @@
+<{include file="block/header.html"}>
+<iframe id="miniframe" name="miniframe" style="display:none;"></iframe>
+
+<div class="mainwd">
+	<div class="priceBanner"><img src="<{$pager.theme}>/default/static/images/pricead.jpg" /></div>
+	<div class="priceForm">
+		<h1><{$CONFIG.site.title}>在线报价</h1>
+		<form action="/tenders-save.html" id='tenders-forms' mini-form='tenders_TBJ' method="post">
+		<input type="hidden" name="data[from]" value="TBJ" /> 
+			<div class="fmDiv"><big>你的姓名：</big><input type="text" id='contact' class="text area" name="data[contact]" value=""/>
+			<span style="margin-left:80px;"><big>手机号码：</big><input type="text" id='mobile' class="text area" name="data[mobile]" value=""/></span>
+			</div>
+			<div class="fmDiv"><big>建筑面积：</big><input type="text" id='mj' class="text area" name="data[mj]" value=""/>
+			<span style="margin-left:80px;"><big>装修风格：</big>
+			<select name="data[style_id]"  class="text">
+				<{foreach from=$setting[$type['style']] item=item key=key}>
+                        <option <{if $detail.style_id == $key}> selected="selected" <{/if}> value="<{$key}>"><{$item}></option>
+                <{/foreach}>
+			</select></span>
+			</div>
+			<div class="fmDiv"><big>小区名称：</big><input type="text" id='home_name' class="text area" name="data[home_name]" value=""/>
+			<span style="margin-left:80px;"><big>装修档次:</big><input type="radio" class="radio" name="data[level]" value="1"/><i>简装</i><input type="radio" class="radio" name="data[level]" value="2"/><i>精装</i><input type="radio" class="radio" name="data[level]" value="3"/><i>豪装</i></span>
+			</div>
+			<div class="fmDiv"><big class="lt">户型结构：</big>
+			<select name="data[house_type_id]"  class="text">
+				<{foreach from=$setting[$type['house_type']] item=item key=key}>
+                     <option <{if $detail.house_type_id == $key}> selected="selected" <{/if}> value="<{$key}>"><{$item}></option>
+                <{/foreach}>
+			</select>
+			<span style="margin-left:80px;"><big>装修城市：</big><{widget id="data/region" province_id=$detail.province_id city_id=$detail.city_id area_id=$detail.area_id class="text cy"}></span>
+			<a id="price_reload" onclick="getResult()" class="btn btn_sub_big rt" <{if $is_show!=1}> style="display:none;" <{/if}>>重新估价</a>		
+			<!-- <a id="price_first" href="<{link ctl='price:yuyue' http='ajax'}>" mini-load="手机验证" mini-form="#index-book-form" mini-width="450" class="btn btn_sub_big rt" <{if $is_show==1}>style="display:none;" <{/if}>>估算报价</a> -->
+
+			<a id="price_first" onclick="getResult()" class="btn btn_sub_big rt" mini-tenders="tenders-forms" >估算价格</a>
+			</div>			
+		</form>
+	</div>
+	<div class="priceAdv">
+	</div>
+	<div id='show_result'></div>
+</div>
+<script type="text/javascript">
+function getResult(){
+	
+	Widget.MsgBox.load("数据处理中。。。");
+	var ident = $("tenders-forms");
+    $.post("<{link ctl='tenders:save' http='base'}>", $("#tenders-forms").serialize(), function(ret){
+        if(ret.error){
+            Widget.MsgBox.error(ret.message.join(","));
+			//alert("计算出错");
+        }else{
+            $("#"+ident).html($("#tenders_ok").html());
+			//alert("提交成功");
+            if(ret.wx_tenders_qr){
+                $("[lay='"+ident+"'] .erweima_box img").attr("src", ret.wx_tenders_qr);
+                $("[lay='"+ident+"'] .erweima_box").show();
+            }
+			Widget.MsgBox.hide();
+        }       
+    }, 'json');
+	var mj = $('#mj').val();
+	if(mj){
+		Widget.MsgBox.load("正在为您计算中...")
+		var link = "/index.php?price-get_price-#mj.html";
+		//var links = "<{link ctl='price:get_price' arg0='#mj'}>";
+		$("#show_result").load(link.replace("#mj", mj), function(){Widget.MsgBox.hide();});
+	}else{
+		Widget.MsgBox.load("请填写建筑面积");
+	}
+}
+</script> 
+
+<style>
+/*在线报价页面样式修改 2015-06-09*/
+.priceBanner{ margin:5px 0px;}
+.priceForm h1{ text-align:center; margin:30px 0px; color:#000; background:#fafafa; height:50px; line-height:50px; box-shadow:0px 0px 3px #ddd; font-size:30px;}
+.priceForm{ margin:50px 0px;}
+.priceAdv{ margin-bottom:30px;}
+
+.pricePro{ margin:30px 0px;}
+.pricePro table.box{ border-left:1px solid #ddd;border-top:1px solid #ddd; width:100%;}
+.pricePro tr th,.pricePro tr td{ border-right:1px solid #ddd;border-bottom:1px solid #ddd;height:40px;}
+.pricePro tr th{ background:#ededed; font-size:16px;}
+.pricePro tr td{ font-size:14px; padding:5px; width:12%; min-width:100px;}
+.fmDiv{ height:50px; margin:20px 0px; line-height:50px;}
+.fmDiv big{ font-size:18px; color:#333;}
+.fmDiv input.area{ height:32px;}
+.fmDiv input.radio{ vertical-align:middle; margin-left:20px; }
+.fmDiv i{font-size:14px; font-style:normal; margin-left:2px;}
+.fmCount{ float:left; width:120px; height:50px; background:url(../images/priceInput.png) center left no-repeat; position:relative;}
+.fmCount input.text{ border:none; width:45px; height:32px; background:none; text-align:center; font-size:16px; padding:0px; color:#333; font-weight:bold; margin-right:30px;}
+.fmDiv select.text{ height:40px; background:none; text-align:center; padding:0px; width:140px;}
+.fmDiv select.cy{ margin-right:10px;}
+.fmCount a{ position:absolute; display:inline-block; width:20px; height:20px;}
+.fmCount a.jia{ top:-13px; left:50px; font-size:16px; font-weight:bold;}
+.fmCount a.jian{ bottom:24px; left:52px;}
+.fmDiv input.btn{ height:50px; line-height:50px; background:#fe7902; border:none; border-radius:0px;}
+
+.priceGjia{ border:1px solid #eee; background:#f8f8f8; padding:10px; font-size:16px; margin:20px 0px;}
+.priceGjia b{ font-size:20px;}
+.yuyBook span.goYz{ display:inline-block; margin-left:15px;height: 34px; line-height: 32px; padding:0 10px; border: 1px solid #ccc; cursor: pointer; color: #666; background:#eee; color:#000;}
+.yuyTxt{ margin:20px 0px; line-height:24px;}
+.yuyBook .bjBtn{ text-align:center; margin-top:20px;}
+.yuyBook .bjBtn .btn{ background:#ff6600; border:none;}
+
+.bjQuit{ background:none repeat scroll 0 0 #f5f5f5; margin:20px 0px; padding:20px; border-radius:5px;}
+.bjQuit h2{ font-size:16px; color:#ff6600; margin-bottom:10px;} 
+.bjQuit ul.bjQuitTxt{ margin:8px 0px;}
+.bjQuit ul.bjQuitTxt li{ position:relative; text-indent:10px;}
+.bjQuit ul.bjQuitTxt li i{ position:absolute; top:10px; left:0px; width:5px; height:5px; background:#ff6600; border-radius:1px;}
+.bjQuitBtn{ margin-top:10px;}
+.bjQuitBtn .btn{ display:inline-block; margin-right:15px; width:110px; height:38px; line-height:30px; padding:0px;border:none;}
+.bjQuitBtn .btn_over_big{ background:#aaa; color: #fff;}
+.bjQuitBtn .btn_sub_big{ background:#ff6600;}
+
+.coDe{ display:inline-block; vertical-align:middle; height:24px; padding:0px 10px; border:1px solid #e0e0e0; text-align:center; line-height:22px; margin:0px 10px; position:relative; background:#fff; font-size:12px;}
+.coDe .pic{  background:#fff; border-radius:3px;}
+.coDe .pic img{ padding-top:2px; margin-left:5px;}
+.coDe .show{ position:absolute; width:96px; left:-1px; top:24px; z-index:30; padding:4px; background:#fff;display:inline-block; display:none; border:1px solid #ddd; border-top:none;}
+.coDe .show img{ width:100px; height:100px;}
+.sub_case_top h3{ margin-bottom:10px;}
+.bdsharebuttonbox{ position:relative;}
+.bdsharebuttonbox .coDe{ position:absolute; left:-125px; top:5px;}
+</style>
+
+<{include file="block/footer.html"}>

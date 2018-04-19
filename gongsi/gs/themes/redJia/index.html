@@ -1,0 +1,306 @@
+<{include file="block/header.html"}> 
+<script type="text/javascript"  src="/themes/default/static/js/index.js"></script>
+<div class="mainwd"> 
+  <!--banner内容开始--> 
+  <{include file="index/top.html"}> 
+  <!--banner内容结束-->
+  <div class="mb20"> <{adv name="红色齐家模板首页通栏广告ad1" city_id=$request.city_id}> </div>
+  <div class="mb20"> 
+  	<div class="hl_z_com lt">
+		 <div class="jiaTitle"> <span class="lt">找公司</span>
+			  <div class="rt jiaTitle_rt">
+				<a target="_blank" href="<{link ctl="gs" arg0=1 arg1=1}>">更多>></a> </div>
+			</div>
+			<ul class="com">
+            <{KT id="2" name="网站首页1F推荐装修公司" city_id=$request.city_id limit="8"}>
+            	<li <{if $index%4==0}>style="margin-left:0px;"<{/if}>>
+				<div class="lt"><a target="_blank" href="<{$item.link}>"><img src="<{$pager.img}>/<{$item.thumb}>" alt="<{$item.name}>"/></a>
+				</div>
+				<div class="rt">
+				<h4><a target="_blank" href="<{$item.link}>"><{$item.name}></a></h4>
+				<p class="graycl">口碑值：<font class="fontcl1"><{$item.score}></font></p>
+				</div>
+				<div class="cl"></div>
+				</li>
+            <{/KT}>
+        </ul>
+	</div>
+    <!--最新签约开始-->
+    <div class="hl_z_l rt">
+      <div class="jiaTitle">
+	   <span class="lt">最新鉴约</span>
+			 </div>
+      <ul class="qyqycon">
+      	<{calldata mdl="tenders/tenders" sign_company_id=">:0" city_id=$request.city_id limit="6"}>
+            <li> <span class="hl_a1">新签约</span> <span> <a href="<{$item.ext.company.company_url}>" target="_blank" class="fontcl2">[<{$item.ext.company.name}>]</a></span> <span>签约</span> <span><a href="<{link ctl='tenders:detail' arg0=$item.tenders_id}>" target="_blank">[<{$item.contact}>]</a></span> <span><{$item.home_name|default:'--'}></span> </li>    
+            <{/calldata}>	
+      </ul>
+    </div>
+    <!--最新签约结束-->
+    <div class="cl"></div>
+  </div>
+  <div class="mb20">
+    <div class="jiaTitle"> <span class="lt">买建材</span>
+      <div class="rt jiaTitle_rt">
+        <a target="_blank" href="<{link ctl="mall/product" arg0=1 arg1=1}>">更多>></a> </div>
+    </div>
+    <div class="lt mjc_con_lt">
+      <div class="mjc_con_top">
+        <{calldata mdl="shop/cate" parent_id=1  limit="18"}>
+        	<{calldata mdl="shop/cate" parent_id=$item.cat_id  limit="18"}>
+            	 <a href="<{link ctl="mall/product" arg0=$item.cat_id arg1=1}>"><{$item.title}></a>
+            <{/calldata}>
+        <{/calldata}>
+     
+      </div>
+      <div class="mjc_con_bottom"> <{adv name="红色齐家模板首页买建材图片广告" city_id=$request.city_id}> </div>
+    </div>
+    <div class="rt mjc_con_rt">
+      <ul>
+        <{KT name="红色齐家模板首页买建材商品" city_id=$request.city_id}> <li <{if $index%4==0}>style=" border-left:none;"<{/if}>> <a href="<{if $item.link}><{$item.link}><{else}><{link ctl='mall/product:detail' arg0=$item.producdt_id arg1='1'}><{/if}>"><img src="<{$pager.img}>/<{$item.photo}>_thumb.jpg" /></a>
+        <p ><a href="<{$item.link}>" class="blackcl tit" target="_blank"><{$item.title}></a></p>
+        <p class="graycl"><{$item.ext.shop.name}></p>
+        <p>价格：<b class="fontcl1 tit">￥<{$item.price}></b></p>
+        </li>
+        <{/KT}>
+      </ul>
+    </div>
+    <div class="cl"></div>
+    <div class="jia_tshop">
+      <ul>
+        <{KT name="红色齐家模板首页买建材商家" city_id=$request.city_id limit="8"}>
+        <li><a href="<{$item.link}>" target="_blank" title="<{$item.title}>"><img src="<{$pager.img}>/<{$item.thumb}>" /></a> </li>
+        <{/KT}>
+      </ul>
+    </div>
+  </div>
+  <div class="mb20"> <{adv name="红色齐家模板首页通栏广告ad2" city_id=$request.city_id}> </div>
+  <div class="mb20">
+    <div class="jiaTitle"> <span class="lt">买家具</span>
+      <div class="rt jiaTitle_rt">
+        <a target="_blank" href="<{link ctl="mall/product" arg0=2 arg1=1}>">更多>></a></div>
+    </div>
+    <div class="lt mjc_con_lt">
+      <div class="mjc_con_top"> 
+      	 <{calldata mdl="shop/cate" parent_id=2  limit="18"}>
+        	<{calldata mdl="shop/cate" parent_id=$item.cat_id  limit="18"}>
+            	 <a href="<{link ctl="mall/product" arg0=$item.cat_id arg1=1}>"><{$item.title}></a>
+            <{/calldata}>
+        <{/calldata}>
+       </div>
+      <div class="mjc_con_bottom"> <{adv name="红色齐家模板首页买家具图片广告" city_id=$request.city_id}> </div>
+    </div>
+    <div class="rt mjc_con_rt">
+      <ul>
+        <{KT name="红色齐家模板首页买家具商品" city_id=$request.city_id}> <li <{if $index%4==0}>style=" border-left:none;"<{/if}>> <a target="_blank"  href="<{if $item.link}><{$item.link}><{else}><{link ctl='mall/product:detail' arg0=$item.producdt_id arg1='1'}><{/if}>"><img src="<{$pager.img}>/<{$item.photo}>_thumb.jpg" /></a>
+        <p ><a href="<{$item.link}>" class="blackcl tit" target="_blank" ><{$item.title}></a></p>
+        <p class="graycl"><{$item.ext.shop.name}></p>
+        <p>价格：<b class="fontcl1 tit">￥<{$item.price}></b></p>
+        </li>
+        <{/KT}>
+      </ul>
+    </div>
+    <div class="cl"></div>
+    <div class="jia_tshop">
+      <ul>
+        <{KT name="红色齐家模板首页买家具商家" city_id=$request.city_id limit="8"}>
+        <li><a href="<{$item.link}>" target="_blank" title="<{$item.title}>"><img src="<{$pager.img}>/<{$item.thumb}>" /></a> </li>
+        <{/KT}>
+      </ul>
+    </div>
+  </div>
+  <div class="mb20"> <{adv name="红色齐家模板首页通栏广告ad3" city_id=$request.city_id}> </div>
+  <div class="mb20">
+    <div class="jiaTitle"> <span class="lt">看案例</span>
+      <div class="rt jiaTitle_rt"> <a target="_blank" href="<{link ctl="case"}>">更多>></a> </div>
+    </div>
+    <ul class="jia_case">
+      <{KT name="红色齐家模板首页热门案例" city_id=$request.city_id limit="7"}> <li <{if $first}> class="first"<{/if}> <{if $index==2 || $index==6}>class="special"<{/if}>>
+      <div class="opacity_img"> <a  target="_blank" href="<{$item.link}>"> <img src="<{$pager.img}>/<{$item.thumb}>" alt="<{$item.title}>"/>
+        <p class="bg"></p>
+        <p class="text"><{$item.title|cutstr:20}></p>
+        </a> </div>
+      </li>
+      <{/KT}>
+    </ul>
+    <div class="cl"></div>
+  </div>
+  	<div class="mb20">
+		<!--装修攻略开始-->	
+		 <div class="jiaTitle mb10"> <span class="lt">学装修</span>
+      <div class="rt jiaTitle_rt"> <a target="_blank" href="<{link ctl="article"}>">更多>></a> </div>
+    </div>
+		<div class="index_zx_dairy">
+			<div class="index_zx_tit">
+				<a href="<{link ctl='diary'}>"><em></em><span class="diaryIcon index_zx_ico1"></span>
+				<p>装修日记</p>
+				</a>
+			</div>
+			<ul class="zx_dairy_list">
+				<{calldata mdl="diary/diary" city_id=$request.city_id orderby="hot" limit="4"}>
+				<li>
+					<div class="opacity_img">
+						<a href="<{link ctl='diary:detail' arg0=$item.diary_id}>">
+						<img src="<{$pager.img}>/<{$item.thumb}>" />
+						<p class="bg"></p>
+						<p class="text"><{$item.title}></p>
+						</a>
+					</div>
+					<span class="fenlei"><{$item.status_title}></span>
+				</li>
+				<{/calldata}>
+			</ul>
+			<div class="cl"></div>
+		</div>
+		<div class="index_zx_lean">
+			<div class="index_zx_tit">
+				<a href="<{link ctl='article'}>"><em></em><span class="diaryIcon index_zx_ico2"></span>
+				<p>学装修</p>
+				</a>
+			</div>
+			<ul class="zx_lean_list">
+				<li>
+					<h3>装修课堂</h3>
+					<img src="%THEME%/static/images/lean1.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{KT name="红色齐家模板首页装修学堂" city_id=$request.city_id limit="4"}>
+							<li><a href="<{$item.link}>"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/KT}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+				<li>
+					<h3>知识问答</h3>
+					<img src="%THEME%/static/images/lean2.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{KT name="红色齐家模板首页知识问答" city_id=$request.city_id limit="4"}>
+							<li><a href="<{link ctl='ask:detail' arg0=$item.ask_id}>"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/KT}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+				<li>
+					<h3>装修日记</h3>
+					<img src="%THEME%/static/images/lean3.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{KT name="红色齐家模板首页装修日记" city_id=$request.city_id limit="4"}>
+							<li><a href="<{$item.link}>"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/KT}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+			</ul>
+			<div class="cl"></div>
+		</div>
+		<!--装修攻略结束-->
+	</div>
+  <div class="mb20"> <{adv name="红色齐家模板首页通栏广告ad4" city_id=$request.city_id}> </div>
+  <div class="mb20">
+    <div class="jiaTitle"> <span class="lt">行业资讯</span>
+      <div class="rt jiaTitle_rt"> <a target="_blank" href="<{link ctl="article"}>">更多>></a> </div>
+    </div>
+    <div class="lt jia_news_ad">
+    	<{adv name="红色齐家模板首页行业资讯图片广告" city_id=$request.city_id}> 
+    </div>
+    <div class="lt jia_news_mid">
+     <ul>
+        <{KT name="红色齐家模板首页热点资讯" city_id=$request.city_id limit="2"}>
+        <li>
+      	  <h2><a target="_blank" href="<{link ctl='article:detail' arg0=$item.article_id}>"><{$item.title}></a></h2>
+         <p class="graycl"><{$item.desc|cutstr:'90':''}><a target="_blank" href="<{link ctl='article:detail' arg0=$item.article_id}>" class="fontcl2">[+更多]</a> </p>
+         </li>
+        <{/KT}>
+      </ul>
+    </div>
+    <div class="rt jia_news_list">
+     <ul>
+        <{KT name="红色齐家模板首页行业资讯-列表模式" city_id=$request.city_id limit="7"}>
+        <li> <a target="_blank" href="<{link ctl='article:detail' arg0=$item.article_id}>"><{$item.title}></a> </li>
+        <{/KT}>
+      </ul>
+    </div>
+    <div class="cl"></div>
+   </div>
+</div>
+<script type="text/javascript">
+	$('.v_indexBox li a').mouseover(function(){
+		$(this).css('background-position-y','-196px');
+	}).mouseleave(function(){
+		$(this).css('background-position-y','0px');
+	});	
+	
+	 $(".zizhu .zz ul ol li").mouseover(function(){
+	var index=$(this).index();
+		 $(".zizhu .zz ul ol li").each(function(a){    
+			if(a == index){
+				$(this).addClass('on');
+				$('.zizhu .zz ul').find('dl').eq(a).show();
+			}
+			else{
+				 $(this).removeClass('on');
+				 $('.zizhu .zz ul').find('dl').eq(a).hide();
+			 }
+		 })                
+	 });                   
+$(".zizhu .zz ul ol li").eq(0).mouseover();
+</script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	//首页装修公司排行
+		$(".com_right p.tit a").mouseover(function(){
+			var index=$(this).index();
+				 $(".com_right p.tit a").each(function(a){	
+					if(a == index){
+						$(this).addClass('current');
+						$('.com_right .index_paihang').find('ul').eq(a).show();
+					}
+					else{
+						 $(this).removeClass('current');
+						 $('.com_right .index_paihang').find('ul').eq(a).hide();
+					 }
+				 })				   
+	  		 });				   
+		$(".com_right p.tit a").eq(0).mouseover();	
+	$(".index_nwod_list li:odd").addClass('grayBg');	
+	$(function(){
+		$("div.to_nwod_box").myScroll({
+			speed:500, //数值越大，速度越慢
+			rowHeight:41 //li的高度
+		});
+	});	
+	$(function(){
+	    var dateTime = new Date();
+	    var difference = dateTime.getTime() - <{$pager.dateline}>*1000;	
+	    setInterval(function(){
+	      $("[remaintime]").each(function(){
+	        var obj = $(this);
+	        var endTime = new Date(parseInt(obj.attr('remaintime')) * 1000);
+	        var nowTime = new Date();
+	        var nMS=endTime.getTime() - nowTime.getTime() + difference;
+	        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+	        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+	        var myM=Math.floor(nMS/(1000*60)) % 60;
+	        var myS=Math.floor(nMS/1000) % 60;
+	        var myMS=Math.floor(nMS/100) % 10;
+	        if(myD>= 0){
+				var str = myD+"天"+myH+"小时"+myM+"分"+myS+"."+myMS+"秒";
+	        }else{
+				var str = "真遗憾您来晚了，抢购已经结束。";	
+			}
+			obj.html(str);
+	      });
+	    }, 100);
+	});		
+});
+
+</script> 
+<{include file="block/footer.html"}>

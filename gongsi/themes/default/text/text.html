@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="jquery.js"></script>
+<body>
+<form >
+    <input type="hidden" name="account[from]" value="<{$pager.from}>" id="token" />
+    <input type="text" name="username" id="username" value="3"><br>
+    <input type="text" name="password" id="pwd" value="1"><br>
+    <input type="button" id="text" onclick="t()" value="支付包支付">
+</form>
+
+
+
+</body>
+<script>
+    function t()
+    {
+        var name =$('#username').val();
+        var pwd = $('#pwd').val();
+        var token = $('#token').val();
+        var data = {'name':name,'pwd':pwd,
+                    'account[from]':token
+        };
+        $.post('<{link ctl="index:text2"}>',data,function(msg){
+            console.log(msg);
+        })
+    }
+</script>
+</html>

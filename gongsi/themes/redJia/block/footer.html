@@ -1,0 +1,66 @@
+<div class="main_footer">
+	<div class="freshLink">
+        <div class="mainwd">
+          <h3><font class="lt">友情链接</font></h3>
+          <ul>
+            <{calldata mdl='market/links' city_id=$request.city_id limit="20"}>
+            <li><a href="<{$item.link}>"><{$item.title}></a></li>
+            <{/calldata}>
+          </ul>
+          <div class="cl"></div>
+        </div>
+    </div>
+    <div class="freshFooter">
+    	<div class="mainwd">
+        	 <div class="lt">
+             	<h2><span class="jiaIcon bt_city"></span> 全国 <a href="<{link ctl="city"}>" class="cy">[切换城市]</a> </h2>
+                <h2><label>网站热线：<font class="fontcl1"><{$CONFIG.site.phone}></font></label>
+                <label>网站客服：<{foreach explode(',', $CONFIG.site.kfqq) as $qq}><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=<{$qq}>&site=<{$CONFIG.site.domain}>&menu=yes" title="<{$CONFIG.site.title}>" class="ico_list qq_ico"></a><{/foreach}></label></h2>
+                <p class="list"><{calldata mdl="article/article" city_id=$request.city_id from='about' limit="6"}><a href="<{link ctl='about' arg0=$item.page}>"><{$item.title}></a> <{if !$last}>|<{/if}> <{/calldata}>|<{if $request.city.tongji}><{$request.city.tongji}><{else}><{$CONFIG.site.tongji}>1<{/if}></p>
+               <p><img src="%THEME%/static/images/bottomImg.jpg" /></p>
+                <p>Copyright2012-2112 www.ijh.cc,All Rights Reserved ICP备案：<{$CONFIG.site.icp}></p>
+            </div>
+            <div class="rt">
+            	<img src="<{if $CONFIG.site.weixinqr}><{$pager.img}>/<{$CONFIG.site.weixinqr}><{else}>%THEME%/static/images/weixin.jpg<{/if}>"/>
+                <p>微信扫一扫</p>
+            </div>
+            <div class="cl"></div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="<{$pager.res}>/script/bxslider/jq.bxslider.css" type="text/css" />
+<script type="text/javascript"  src="<{$pager.res}>/script/bxslider/jq.bxslider.min.js"></script>
+<script type="text/javascript"  src="<{$pager.res}>/script/jquery.lazyload.js"></script>
+<script type="text/javascript">
+(function(K, $){
+$(document).ready(function(){
+    $('[bxSlider]').bxSlider({ mode: 'fade',captions: true,auto:true});
+    $("img").lazyload({placeholder:"<{$pager.res}>/images/grey.gif",failurelimit:10});
+});
+})(window.KT, window.jQuery);
+
+$(function(){
+if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder
+    $('[placeholder]').focus(function() {
+        var input = $(this);
+        if (input.val() == input.attr('placeholder')) {
+            input.val('');
+            input.removeClass('placeholder');
+        }
+    }).blur(function() {
+        var input = $(this);
+        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+            input.addClass('placeholder');
+            input.val(input.attr('placeholder'));
+        }
+    }).blur();
+};
+})
+function placeholderSupport() {
+    return 'placeholder' in document.createElement('input');
+}
+</script>
+<!--底部内容结束-->
+<{widget id="public/kefu"}>
+</body>
+</html>

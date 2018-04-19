@@ -1,0 +1,93 @@
+<div class="main_footer_bottom">
+<p><{calldata mdl="article/article" city_id=$request.city_id from='about' limit="6"}><a href="<{link ctl='about' arg0=$item.page}>"><{$item.title}></a> <{if !$last}>|<{/if}> <{/calldata}></p>
+<p>
+		<p>免责声明：本网站部分内容由用户自行上传，如权利人发现存在侵犯其权益情形，请及时与本站联系。</p>
+		<p>© 2017 <{$CONFIG.site.title}>保留所有权利.  ICP备案：<{$CONFIG.site.icp}></p>
+<{if $request.city.tongji}><{$request.city.tongji}><{else}><{$CONFIG.site.tongji}><{/if}>
+</p>
+<p><span class="main_footer_bm_ico index_ico"></span></p>
+</div>
+<link rel="stylesheet" href="<{$pager.res}>/script/bxslider/jq.bxslider.css" type="text/css" />
+<script type="text/javascript"  src="<{$pager.res}>/script/bxslider/jq.bxslider.min.js"></script>
+<script type="text/javascript"  src="<{$pager.res}>/script/jquery.lazyload.js"></script>
+<script type="text/javascript">
+(function(K, $){
+$(document).ready(function(){
+    $('[bxSlider]').bxSlider({ mode: 'fade',captions: true,auto:true});
+    $("img").lazyload({placeholder:"<{$pager.res}>/images/grey.gif",failurelimit:10});
+});
+})(window.KT, window.jQuery);
+$(function(){
+if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder
+    $('[placeholder]').focus(function() {
+        var input = $(this);
+        if (input.val() == input.attr('placeholder')) {
+            input.val('');
+            input.removeClass('placeholder');
+        }
+    }).blur(function() {
+        var input = $(this);
+        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+            input.addClass('placeholder');
+            input.val(input.attr('placeholder'));
+        }
+    }).blur();
+};
+})
+function placeholderSupport() {
+    return 'placeholder' in document.createElement('input');
+}
+</script>
+
+
+<div class="photo_bottom photo_bottom02" style="left:-100%;">
+  <div class="photo_bg"></div>
+  <div class="w1220">
+    <div class="new_version" href="javasrcpit:;">
+      <a href="" target=''><img src="/themes/dibu.png"/></a>
+    </div>
+    <form action="<{link ctl='tenders:save' http='base'}>" method="post" mini-form='tenders_tzx' id="tenders-tzx">
+      <input type="hidden" name="data[from]" value="TZX" />
+      <ul>
+        <li class="title_ti">立省半年工资，已有<font class="fontcl1"><{$COUNT.tenders*3+$COUNT.tenders}></font>人获得了实惠</li>
+        <li>
+          <div class="form-item">
+            <input class="name" name="data[contact]" type="text" value="" placeholder="请输入您的姓名">
+			<input class="intel" name="data[mobile]" type="text" value="" placeholder="请输入您的手机号码">
+          </div>
+        </li>
+        <li class="marbott_0">
+          <div class="form-item">
+      			<select name="data[budget_id]" class="ys">
+        			<{widget id="tenders/setting" type="budget"}>
+      			</select>
+            <input class="mj" name="data[house_mj]" type="text" value="" placeholder="装修面积"><label style="">㎡</label>
+          </div>
+          <div>
+            <input type="hidden" name="data[comment]" value="招标来源于：网页底部浮动条" />
+            <input type="submit" class="order-btn photo_btn" cookies="mei_kai" value="免费领取">
+          </div>
+        </li>
+      </ul>
+    </form>
+    <div class="renma"> 扫微信，更划算<br>
+      <img src="<{if $CONFIG.site.weixinqr}><{$pager.img}>/<{$CONFIG.site.weixinqr}><{else}>%THEME%/static/images/weixin.jpg<{/if}>" width="100" height="100"> </div>
+    <div class="photo_cosle"></div>
+  </div>
+</div>
+<div class="photo_bottom_kai"></div>
+<script language="javascript">
+$(function(){
+$(".photo_bottom_kai").css({'left':'0px'});
+$(".photo_cosle").click(function(){
+$(".photo_bottom").animate({'left':'-100%'},800,function(){
+				$(".photo_bottom_kai").animate({'left':'0'},200);
+			});
+})
+$(".photo_bottom_kai").click(function(){
+$(".photo_bottom_kai").animate({'left':'-160px'},200,function(){
+				$(".photo_bottom").animate({'left':'0'},800);
+			});
+})
+})
+</script>

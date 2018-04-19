@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<{include file="block/sheader.html"}>
+</head>
+<body>
+<iframe id="miniframe" name="miniframe" style="display:none;"></iframe>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".search_box .search_cont").mouseover(function(){
+        var o = $("#top_select").offset();
+        $(this).find(".search_cont_list").css({left:o.left-2,top:o.top+36}).show();
+    }).mouseleave(function(){
+        $(this).find(".search_cont_list").hide();
+    });
+    $(".search_cont_list a").click(function(){
+        $(".search_box .search_cont #top_select").html($(this).text()+'<span class="search_ico index_ico"></span>');
+        $(".search_box form").attr('action',$(this).attr('rel'));
+        $(".search_box .search_cont_list").hide();
+    });
+	//绿色头部搜索框
+	$(".search_cont").mouseover(function(){
+		$(this).find(".search_cont_list").show();
+	}).mouseleave(function(){
+		$(this).find(".search_cont_list").hide();
+	});
+	//绿色导航
+	$(".header_bottom ul li").mouseover(function(){
+		$(this).addClass('current');
+		$(this).find(".main_nav_son").show();
+		$(this).find("em.menu_ico").addClass('menu_ico_over');
+	}).mouseleave(function(){
+		$(this).removeClass('current');
+		$(this).find(".main_nav_son").hide();
+		$(this).find("em.menu_ico").removeClass('menu_ico_over');
+	});
+});
+</script>

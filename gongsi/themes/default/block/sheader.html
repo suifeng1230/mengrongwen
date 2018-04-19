@@ -1,0 +1,50 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $seo_sub_title}><{$seo_sub_title}>_<{/if}><{if $seo_title}><{$seo_title}><{elseif $SEO.title}><{$SEO.title}><{else}><{$CONFIG.site.title}><{/if}></title>
+<meta name="keywords" content="<{if $seo_keywords}><{$seo_keywords}><{elseif $SEO.keywords}><{$SEO.keywords}><{/if}>" />
+<meta name="description" content="<{if $seo_description}><{$seo_description}><{elseif $SEO.description}><{$SEO.description}><{/if}>" />
+<link rel="stylesheet" href="<{$pager.res}>/ui/j.ui.css?<{$VER}>" type="text/css" />
+<link rel="stylesheet" href="<{$pager.res}>/style/kt.widget.css?<{$VER}>" type="text/css" />
+<link rel="stylesheet" href="<{$pager.res}>/style/common.css?<{$VER}>" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/themes/default/static/css/public.css?<{$VER}>" />
+<link type="text/css" rel="stylesheet" href="/themes/default/static/css/style.css?<{$VER}>" />
+<link rel="stylesheet" type="text/css" href="%THEME%/static/css/append.css?<{$VER}>"/> 
+<script type="text/javascript">window.URL={"domain":"<{$CONFIG.site.domain}>","url":"<{$CONFIG.siteurl}>", "res":"<{$pager.res}>", "img":"<{$pager.img}>","city":"<{$request.city.siteurl}>"};window.G={"city":"<{$request.city.city_name}>"};</script>
+<script type="text/javascript"  src="<{$pager.res}>/script/kt.j.js?<{$VER}>"></script>
+<script type="text/javascript"  src="<{$pager.res}>/script/kt.js?<{$VER}>"></script>
+<script type="text/javascript"  src="<{$pager.res}>/ui/j.ui.js?<{$VER}>"></script>
+<script type="text/javascript"  src="<{$pager.res}>/script/widget.login.js?<{$VER}>"></script>
+<script type="text/javascript"  src="<{$pager.res}>/script/widget.msgbox.js?<{$VER}>"></script>
+<script type="text/javascript"  src="/themes/default/static/js/scroll.js?<{$VER}>"></script>
+<script type="text/javascript">
+try {
+var urlhash = window.location.hash;
+if (!urlhash.match("fromapp")){
+if ((navigator.userAgent.match(/(iPhone|iPod|Android|iOS|iPad)/i))){
+window.location="http://www.mengrongwen.com/mobile/index.html";
+}
+}
+}
+catch(err){
+}
+</script>
+<{include file="block/css_append.html"}>
+<{$tpl_head_append}>
+<style>
+.top_ad{background:#e6d740;width:100%;height:82px; display: block;}
+.top_ad ul{width:1270px;margin:0 auto;height: 82px;}
+</style>
+<div class="top_ad" style="" id="js_ads_banner_top">
+<{adv id="4" name="网站首页通栏广告A1" city_id=$request.city_id}>
+</div>
+<div style="margin: 0px auto; width: 1200px; display: none;" id="js_ads_banner_top_slide">
+<ul>
+<li><a href="" target=""><img src="/ad/db.jpg" alt="<{$CONFIG.site.title}>" text="<{$CONFIG.site.title}>" width="1200" height="400"></a></li>
+</ul>
+</div>
+<script>
+if ($("#js_ads_banner_top_slide").length){
+	var $slidebannertop = $("#js_ads_banner_top_slide"),$bannertop = $("#js_ads_banner_top");
+	setTimeout(function(){$bannertop.slideUp(1000);$slidebannertop.slideDow(1000);},2500);
+	setTimeout(function(){$slidebannertop.slideUp(1000,function (){$bannertop.slideDown(1000);});},8500);
+}
+</script>

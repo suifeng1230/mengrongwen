@@ -1,0 +1,118 @@
+<{include file="block/small-header.html"}>
+
+<!--头部内容结束-->
+<div class="mainwd area mb20 mt20 city_content">
+    <!--主体内容开始-->
+        <div class="underline city_top">
+            <a href="<{$request.city.siteurl}>" class="btn"><span class="ico_list city_ico"></span>点击进入<{$request.city.city_name}>站</a>
+        </div>
+        <div class="pding city_chose">
+            <p class="hot_city"><span class="title">热门城市：</span>
+                <{foreach $city_list as $item}>
+                <{if $item.audit==1 && $item@index<12}>
+                    <a href="<{$item.siteurl}>"><{$item.city_name}></a>
+                <{/if}>
+                <{/foreach}>共开通了<{count($city_list)}>个城市</p>      
+                <form action=""><p><span class="title">快速查找：</span>
+                <{widget id="data/region" level=2 city_id=$request.city_id class="text short"}>
+                <input type="button" class="btn btn_main_sm" onclick="gotocity()" value="进入" />
+                </p>        
+                </form>          
+        </div>
+        <div class="pinyin_px pding">
+            <span  class="lt">按拼音字母选择</span>
+            <p id="py_list" class="rt hoverno">
+                <{foreach range('A', 'Z') as $v}><a href="javascript:;" py="<{$v}>"><{$v}></a><{/foreach}></p>
+            <div class="cl"></div>
+        </div>
+        <div class="pding city_liebiao"  id="city_box">
+            <table>
+                <{foreach $province_list as $v}>
+                <tr>
+                    <td class="tit"><{$v.province_name}></td>
+                    <td><{foreach $city_list as $vv}><{if $vv.province_id==$v.province_id}><a href="<{$vv.siteurl}>" id="city_<{$vv.city_id}>" py="<{$vv.py}>"><{$vv.city_name}></a><{/if}><{/foreach}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+    <!--主体内容结束-->
+</div>   
+
+<div class="mainwd">
+<div class="mb20">
+		<h2 class="index_tit"><font class="lt">热点新闻</font><a href="<{link ctl='article'}>" class="rt">更多>></a>
+		</h2>
+		<div class="cl"></div>
+		<div class="to_cont_lt lt">
+			<div class="to_news_ad lt">
+				<a href="" target="_blank" class="index_hotNews_person">
+					<div class="index_hotNews_person_img">
+						<img src="/themes/duihua.jpg" alt="秒懂装修合同" data-original="/themes/duihua.jpg" class="lazy" style="display: block;">
+					</div>
+					<div class="index_hotNews_person_layer">
+					  <span></span>
+					  <div class="index_hotNews_person_num">
+						<i></i>
+						<em class="index_hotNews_person_num3"></em>
+						<em class="index_hotNews_person_num3"></em>
+					  </div>
+					  <h3 title="秒懂装修合同">秒懂装修合同</h3>
+					  <p class="index_hotNews_person_text" title="装修合同是整个家庭装修中最重要的书面文本，但是很多业主由于签订合同时指定和审核缺乏经验，很容易就陷入装修公司的陷阱。为了避免装修过程中发生纠纷，业主在审核装修合同时一定要谨慎重视，本期装修的秘密就来告诉你签订装修合同需要注意的6大事项。">装修合同是整个家庭装修中最重要的书面文本，但是很多业主由于签订 ...</p>
+					  <p>装修网</p>
+					</div>
+				</a>
+				<{adv name="仿土巴兔模板首页热点新闻的图片广告" city_id=$request.city_id}>
+			</div>
+			<div class="to_news_list lt">
+				<ul>
+					<{KT name="仿土巴兔首页热点新闻" city_id=$request.city_id limit=4}>
+					<li>
+						<h3><a href="<{link ctl='article:detail' arg0=$item.article_id}>" title="<{$item.title}>"><{$item.title|cutstr:50}></a>
+						</h3>
+						<p class="graycl"><{$item.desc|cutstr:300}></p>
+					</li>
+					<{/KT}>
+				</ul>
+			</div>
+		</div>
+		<div class="to_cont_rt1 rt">
+			<h2 class="index_tit"><font class="lt">本地新闻</font></h2>
+			<ul class="to_news_right">
+				<{calldata mdl="company/news" city_id=$request.city_id order="views:DESC" limit="6"}>
+				<li><a href="<{link ctl='news:detail' arg0=$item.news_id}>" title="<{$item.title}>"><{$item.title}></a>
+				</li>
+				<{/calldata}>
+			</ul>
+		</div>
+		<div class="cl"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function gotocity(){
+    var city_id = $("select[name='data[city_id]']")[0].value;
+    window.location.href=$('#city_'+city_id).attr("href"); 
+}
+(function(K, $){
+$("#py_list a").click(function(){
+    $("#py_list a").removeClass("current");
+    $(this).addClass("current");
+    var py = $(this).attr("py");
+    $("#city_box a").removeClass("current");
+    $("#city_box a[py='"+py+"']").addClass("current");
+});
+
+})(window.KT, window.jQuery);
+</script>    
+<div class="mainwd">
+		<h2 class="index_tit"><font class="lt">友情链接</font>
+		</h2>
+		<div class="cl"></div>
+<ul class="yq_link">
+                    <{calldata mdl='market/links' limit="500"}>
+    				<li><a href="<{$item.link}>" target="_blank"><{$item.title}></a></li>
+                    <{/calldata}>
+                    <div class="cl"></div>
+    			</ul>
+</div>
+<{include file="block/small-footer.html"}>

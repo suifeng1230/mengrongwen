@@ -1,0 +1,667 @@
+<{include file="block/header.html"}>
+<script type="text/javascript"  src="/themes/default/static/js/index.js"></script>
+
+<!--
+<div class="mainwd" style="margin-bottom:15px;">
+<form action="/tenders-save.html" id='tenders-form1' method="post">
+		<input type="hidden" name="data[from]" value="TBJ" /> 
+			<div class="fmDiv"><big>建筑面积：</big><input type="text" id='mj' class="text area" name="data[mj]" value=""/>
+			<span style="margin-left:80px;"><big>装修风格：</big>
+			<select name="data[style_id]"  class="text">
+				<{foreach from=$setting[$type['style']] item=item key=key}>
+                        <option <{if $detail.style_id == $key}> selected="selected" <{/if}> value="<{$key}>"><{$item}></option>
+                <{/foreach}>
+			</select></span>
+			</div>
+			<div class="fmDiv"><big>你的姓名：</big><input type="text" id='contact' class="text area" name="data[contact]" value=""/>
+			<span style="margin-left:80px;"><big>手机号码：</big><input type="text" name="data[mobile]" value="" class="text outcontrol"  placeholder="请输入您的手机号码" /></span></div>
+			<div class="fmDiv"><big>小区名称：</big><input type="text" id='home_name' class="text area" name="data[home_name]" value=""/>
+			
+			<span style="margin-left:80px;"><big>装修档次:</big><input type="radio" class="radio" name="data[level]" value="1"/><i>简装</i><input type="radio" class="radio" name="data[level]" value="2"/><i>精装</i><input type="radio" class="radio" name="data[level]" value="3"/><i>豪装</i></span>
+			</div>
+			<div class="fmDiv"><big class="lt">户型结构：</big>
+			<select name="data[house_type_id]"  class="text">
+				<{foreach from=$setting[$type['house_type']] item=item key=key}>
+                     <option <{if $detail.house_type_id == $key}> selected="selected" <{/if}> value="<{$key}>"><{$item}></option>
+                <{/foreach}>
+			</select>
+			<span style="margin-left:80px;"><big>装修城市：</big><{widget id="data/region" province_id=$detail.province_id city_id=$detail.city_id area_id=$detail.area_id class="text cy"}></span>
+			<a id="price_reload" onclick="getResult()" class="btn btn_sub_big rt" <{if $is_show!=1}> style="display:none;" <{/if}>>重新估价</a>		
+			
+			<a id="price_first" onclick="getResult()" class="btn btn_sub_big rt" >开始报价</a>
+			<script type="text/javascript">(function(K, $){Widget.Region("FCF0291479C69E48E86E756068B74AEB");})(window.KT, window.jQuery);</script>
+			<input onclick="getResult()" type="button" value="新增报价器功能-免费报价,请点击[开始报价]" mini-tenders="tenders-form1" class="btn_sub_apply btn" style="margin-top:15px;" />
+			</div>			
+		</form>
+<div style="height:20px;margin-bottom:40px;"></div>
+		<div id='show_result'></div>-->
+<script>
+function getResult(){
+
+	Widget.MsgBox.load("数据处理中。。。");
+    var ident = $(this).attr("mini-tenders");
+    $.post("<{link ctl='tenders:save' http='base'}>", $("#tenders-form1").serialize(), function(ret){
+        if(ret.error){
+            Widget.MsgBox.error(ret.message.join(","));
+        }else{
+            $("#"+ident).html($("#tenders_ok").html());
+            if(ret.wx_tenders_qr){
+                $("[lay='"+ident+"'] .erweima_box img").attr("src", ret.wx_tenders_qr);
+                $("[lay='"+ident+"'] .erweima_box").show();
+            }
+			Widget.MsgBox.hide();
+        }       
+    }, 'json');
+
+	var mj = $('#mjs').val();
+	var contact = $('#contact').val();
+	var mobile = $('#mobile').val();
+	if(mj!="" & contact!="" & mobile!=""){
+		Widget.MsgBox.load("正在为您计算中...")
+		var link = "/index-get_price-#mj.html";
+		$("#show_result").load(link.replace("#mj", mj), function(){Widget.MsgBox.hide();});
+	}else{
+		Widget.MsgBox.load("请将姓名、房屋面积、电话号补充完整");
+	}
+}
+</script> 
+<!-- </div>
+<div class="mainwd" style="clear:both;height:20px;margin-bottom:15px;"></div>
+ -->
+<div class="mainwd">
+	<{include file="index/top.html"}>
+	<{*[*************************banner内容结束******************************]*}>
+	
+	<{*[*************************banner下面图标链接结束******************************]*}>
+	<div class="mb20">
+		<h2 class="index_tit hr"><font class="lt">装修流程</font> 
+			<small>业主权益第一，<{$CONFIG.site.title}> 始终保障着业主装修每一步！</small>
+			<a class="hl_xuexi_icoin rt" target="_blank" href="/3fenzhong/" style="    margin-top: 10px;
+    border: 1px solid #F70A0A;
+    border-radius: 4px;
+    padding: 2px 7px;
+    color: #F70A0A;
+    font-size: 14px;" title="三分钟学装修">三分钟学装修</a>
+		</h2>
+		<ul class="index_zxlc_list">
+		  <li> <a href="<{link ctl='tenders'}>" target="_blank" title="为您免费提供验房量房"> <i class="index_zxlc_ico1"></i> <span>收房量房</span> </a> </li>
+		  <li> <a href="<{link ctl='case'}>" target="_blank" title="海量装修效果图为您提供设计参考"> <i class="index_zxlc_ico2"></i> <span>前期准备</span> </a> </li>
+		  <li> <a href="<{link ctl='gs'}>" target="_blank" title="装修公司口碑排名"> <i class="index_zxlc_ico3"></i> <span>选装修公司</span> </a> </li>
+		  <li> <a href="<{link ctl='designer'}>" target="_blank" title="三家装修公司免费出设计方案与报价"> <i class="index_zxlc_ico4"></i> <span>设计阶段</span> </a> </li>
+		  <li> <a href="<{link ctl='tenders'}>" target="_blank" title="建材选购手册"> <i class="index_zxlc_ico5"></i> <span>材料选购</span> </a> </li>
+		  <li> <a href="<{link ctl='site'}>" target="_blank" title="装修施工阶段"> <i class="index_zxlc_ico6"></i> <span>施工阶段</span> </a> </li>
+		  <li> <a href="<{link ctl='site'}>" target="_blank" title="装修保用户，免费网站监理节点验收"> <i class="index_zxlc_ico7"></i> <span>竣工验收</span> </a> </li>
+		  <li> <a href="<{link ctl='tenders'}>" target="_blank" title="硬装结束后，软装配饰"> <i class="index_zxlc_ico8"></i> <span>软装配饰</span> </a> </li>
+		  <li> <a href="<{link ctl='zxb'}>" target="_blank" title="装修结束后，三个月满意后付尾款"> <i class="index_zxlc_ico9"></i> <span>装修保障</span> </a> </li>
+		</ul>
+	</div>
+	<div class="lt">
+		<div class="lc_ad">
+			<{adv id="50" name="AD46" city_id=$request.city_id}>
+		</div>
+		<div class="cl"></div>
+	</div>
+    <{*[***********************************流程下广告结束******************************************************]*}>
+	<div class="mb20 lt">
+		<h2 class="index_tit hr"><font class="lt"><{$request.city.city_name}>最新招标的订单</font>
+			<span class="tit_list lt"><{$request.city.city_name}>今日已有<{$COUNT.tenders*3+$COUNT.tenders}>位业主发布了招标</span>
+		</h2>
+		<div class="cc_yezhu">
+				<div class="text">
+					<div class="lie ml20">所在区县</div>
+					<div class="lie">装修户型</div>
+					<div class="lie">装修面积</div>
+					<div class="lie">装修预算</div>
+					<div class="lie">订单服务进展</div>
+					<div class="lie wh">招标状态</div>
+				</div>
+		<div class="zb_index_top">
+			<ul>
+			<{calldata mdl="tenders/tenders" city_id=$request.city_id order='tenders_id:DESC' limit="15"}>
+			<li class="text02">
+				<span class="lie ml20"><{$item.area_name}></span>
+				<span class="lie"><{$item.house_type_title}></span>
+				<span class="lie"> <{$item.house_mj}> ㎡</span>
+				<span class="lie"><{$item.budget_title}></span>
+				<span class="lie">已有<font color="red"><{$item.looks}></font>家公司服务</span>
+				<span class="lie wh">
+					<{if $item.sign_uid || $item.looks >= 3}>
+					<a>招标完成</a>
+					<{else}>
+					<a href="<{link ctl='tenders:look' arg0=$item.tenders_id http='ajax'}>" mini-load="立即投标" mini-width="400" ><font color="red">我要接单</font></a>
+					<{/if}>
+				</span>
+			  </li>
+			 <{/calldata}>
+			 </ul>
+		</div>
+		</div>
+<script type="text/javascript"> 
+	function autoScroll(obj){  
+		$(obj).find("ul").animate({  
+			marginTop : "-40px"  
+		},500,function(){  
+			$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
+		})  
+	}  
+	$(function(){  
+		setInterval('autoScroll(".zb_index_top")',2000);
+		  
+	}) 	
+</script>
+		<{*[***********************************最新招标结束******************************************************]*}>
+		<div class="boxa">
+			<div class="text01"> 最新签约的商家</div>
+			<{calldata mdl="company/company" city_id=$request.city_id order='tenders_sign:DESC' limit="4" nocache=false}>
+				 <div class="tuijian">
+					<div class="zhu"><a href="<{$item.company_url}>" target="_blank"><img src="<{$pager.img}>/<{$item.thumb}>" width="150" height="60" border="0" align="absmiddle"></a></div>
+					<div class="wenzi"><a href="<{$item.company_url}>" target="_blank"><strong><{$item.name}></strong></a> <font color="#999999">(信誉：<{$item.score}>)</font></div>
+					<div class="wenzi">中标 
+					<{calldata mdl="tenders/tenders" city_id=$request.city_id sign_company_id=$item.company_id limit="1"}>
+					[<a href="<{link ctl='tenders:detail' arg0=$item.tenders_id}>" target="_blank"> <{$item.area_name}>  <{$item.budget_title}> </a>]
+					<{/calldata}>
+					工程</div>
+				 </div>
+			 <{/calldata}>
+		</div>
+		<div class="cl"></div>
+	</div>
+    <{*[***********************************最新签约结束******************************************************]*}>
+	<div class="mb20 index_case">
+		<h2 class="index_tit"><font class="lt">热门案例</font>
+			<span class="tit_list hoverno lt"><a>风格</a>
+			<a>空间</a>
+			<a>别墅</a>
+			<a>小户型</a>
+			<a>公装</a>
+			</span>
+			<a href="<{link ctl='case'}>" class="rt">更多&gt;&gt;</a>
+		</h2>
+		<ul class="index_case_list">
+			<{KT id="4" name="网站首页4F热门案例-风格" city_id=$request.city_id limit="6"}>
+			<li<{if $first}> class="first"<{/if}> >
+			<div class="opacity_img"><a href="<{$item.link}>">
+				<img src="<{$pager.img}>/<{$item.thumb}>"/></a>
+				<p class="bg"></p>
+				<p class="text"><span class="lt"><{$item.title|cutstr:20}></span><span class="rt"><span class="index_ico like_ico"></span><{$item.likes}></span></p>
+			</div>
+			</li>
+			<{/KT}>
+		</ul>
+		<ul class="index_case_list ">
+			<{KT id="5" name="网站首页4F热门案例-空间" city_id=$request.city_id limit="6"}>
+			<li<{if $first}> class="first"<{/if}>>
+			<div class="opacity_img"><a href="<{$item.link}>">
+				<img src="<{$pager.img}>/<{$item.thumb}>"/></a>
+				<p class="bg"></p>
+				<p class="text"><span class="lt"><{$item.title|cutstr:20}></span><span class="rt"><span class="index_ico like_ico"></span><{$item.likes}></span></p>
+			</div>
+			</li>
+			<{/KT}>
+		</ul>
+		<ul class="index_case_list ">
+			<{KT id="6" name="网站首页4F热门案例-别墅" city_id=$request.city_id limit="6"}>
+			<li<{if $first}> class="first"<{/if}>>
+			<div class="opacity_img"><a href="<{$item.link}>">
+				<img src="<{$pager.img}>/<{$item.thumb}>"/></a>
+				<p class="bg"></p>
+				<p class="text"><span class="lt"><{$item.title|cutstr:20}></span><span class="rt"><span class="index_ico like_ico"></span><{$item.likes}></span></p>
+			</div>
+			</li>
+			<{/KT}>
+		</ul>
+		<ul class="index_case_list">
+			<{KT id="7" name="网站首页4F热门案例-小户型" city_id=$request.city_id limit="6"}>
+			<li<{if $first}> class="first"<{/if}>>
+			<div class="opacity_img"><a href="<{$item.link}>">
+				<img src="<{$pager.img}>/<{$item.thumb}>"/></a>
+				<p class="bg"></p>
+				<p class="text"><span class="lt"><{$item.title|cutstr:20}></span><span class="rt"><span class="index_ico like_ico"></span><{$item.likes}></span></p>
+			</div>
+			</li>
+			<{/KT}>
+		</ul>
+		<ul class="index_case_list">
+			<{KT id="8" name="网站首页4F热门案例-公装" city_id=$request.city_id limit="6"}>
+			<li<{if $first}> class="first"<{/if}>>
+			<div class="opacity_img"><a href="<{$item.link}>">
+				<img src="<{$pager.img}>/<{$item.thumb}>"/></a>
+				<p class="bg"></p>
+				<p class="text"><span class="lt"><{$item.title|cutstr:20}></span><span class="rt"><span class="index_ico like_ico"></span><{$item.likes}></span></p>
+			</div>
+			</li>
+			<{/KT}>
+		</ul>
+		<div class="cl"></div>
+	</div>
+	<!--热门案例结束-->
+    <{*[***********************************推荐案例结束****************************]*}>
+	<div class="mb20 index_glve">
+		<h2 class="index_tit hr"><font class="lt">装修知识与攻略</font>
+			<span class="tit_list lt"><{$request.city.city_name}>已有 <{$COUNT.member}>位业主学习到装修知识</span>
+			<a href="<{link ctl='article'}>" class="rt">更多>></a>
+		</h2>
+		</h2>
+		<div class="index_zx_dairy">
+			<div class="index_zx_tit">
+				<a href="<{link ctl='diary'}>"><em></em><span class="index_ico index_zx_ico1"></span>
+				<p>装修日记</p>
+				</a>
+			</div>
+			<ul class="zx_dairy_list">
+				<{calldata mdl="diary/diary" city_id=$request.city_id orderby="hot" limit="4"}>
+				<li>
+					<div class="opacity_img">
+						<a href="<{link ctl='diary:detail' arg0=$item.diary_id}>">
+						<img src="<{$pager.img}>/<{$item.thumb}>" />
+						<p class="bg"></p>
+						<p class="text"><{$item.title}></p>
+						</a>
+					</div>
+					<span class="fenlei"><{$item.status_title}></span>
+				</li>
+				<{/calldata}>
+			</ul>
+			<div class="cl"></div>
+		</div>
+		<div class="index_zx_lean">
+			<div class="index_zx_tit">
+				<a href="<{link ctl='article'}>"><em></em><span class="index_ico index_zx_ico2"></span>
+				<p>学装修</p>
+				</a>
+			</div>
+			<ul class="zx_lean_list">
+				<li>
+					<h3>装修课堂</h3>
+					<img src="%THEME%/static/images/lean1.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{KT name="仿土巴兔首页学装修-装修课堂" city_id=$request.city_id limit="4"}>
+							<li><a href="<{link ctl='article:detail' arg0=$item.article_id}>"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/KT}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+				<li>
+					<h3>知识问答<font class="fontcl2"> (已解决)</font></h3>
+					<img src="%THEME%/static/images/lean2.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{calldata mdl="ask/ask" answer_id='>:0' order="ask_id:desc" limit="4"}>
+							<li><a target="_blank" href="<{link ctl='ask:detail' arg0=$item.ask_id}>" class="lt"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/calldata}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+				<li>
+					<h3>知识问答<font class="fontcl2"> (未解决)</font></h3>
+					<img src="%THEME%/static/images/lean3.jpg" class="lt" />
+					<div class="lt">
+						<ul class="ketant_list">
+							<{calldata mdl="ask/ask" answer_id='0' order="ask_id:desc" limit="4"}>
+							<li><a target="_blank" href="<{link ctl='ask:detail' arg0=$item.ask_id}>" class="lt"><{$item.title|cutstr:30}></a>
+							</li>
+							<{/calldata}>
+						</ul>
+					</div>
+					<div class="cl"></div>
+				</li>
+			</ul>
+			<div class="cl"></div>
+		</div>
+		<!--装修攻略结束-->
+	</div>
+	<div class="mb20">
+		<div class="index_ad3">
+		<{adv name="柯米-仿土巴兔中部广告-图3" city_id=$request.city_id}>
+		</div>
+		<div class="cl"></div>
+	</div>
+	<{*[**********************************广告结束***********************************]*}>
+	<!--推荐装修公司开始-->
+	<div class="mb20 lt">
+		<h2 class="index_tit hr"><font class="lt"><{$request.city.city_name}>装修公司</font>
+			<a href="<{link ctl='gs'}>" class="rt">更多>></a>
+		</h2>
+        <div class="index_gs lt" id="index_gs">
+        	<ul>
+            <{KT name="仿土巴兔首页推荐装修公司" city_id=$request.city_id limit="12"}>
+                <li id="one<{$index+1}>" onclick="setTab('one',<{$index+1}>)" <{if $index==0}>class="on"<{/if}>><a  title="<{$item.title}>"><img src="<{$pager.img}>/<{$item.logo}>" width="130" height="53"/></a></li>
+				<{/KT}>
+            </ul>
+            <{KT name="仿土巴兔首页推荐装修公司" city_id=$request.city_id limit="12"}>
+            <div class="index_gs_detail" id="con_one_<{$index+1}>" <{if $index!=0}>style="display:none;"<{/if}>>
+                <div class="index_gs_detail_hd">
+                    <a href="<{$item.company_url}>" title="<{$item.title}>" target="_blank"><img src="<{$pager.img}>/<{$item.thumb}>" width="150" height="150"></a>
+                    <div class="index_gs_btn">
+                    	<{if $item.is_vip == 1}>
+                         	<a href="<{link ctl='gs:yuyue' arg0=$item.company_id http='ajax'}>" mini-width='500' mini-load="免费预约" class="index_gs_btn_book">免费预约</a>
+                         <{else}>
+                        	<a href="<{link ctl='tenders:fast' arg0=$item.uid http='ajax'}>" mini-width='500' mini-load="立即招标" class="index_gs_btn_book">申请设计</a>
+                     	<{/if}>
+                    </div>
+                    <div class="index_gs_zx">已有<span><{$item.yuyue_num+$item.company_id+9}></span>人咨询</div>
+                </div>
+                <div class="index_gs_koubei"><span>口碑值</span><em><a target="_blank"><{$item.score+$item.avg_score+$item.company_id}></a></em></div>
+                <div class="index_gs_detail_bd">
+                    <div class="index_gs_name">
+                    <span><a href="<{$item.company_url}>" target="_blank"><{$item.name}></a></span>
+                    </div>
+                    <div class="index_gs_level">
+                    <a href="<{$item.company_url}>" target="_blank"></a>
+                    <i class="level_ico level_ico3<{if $item.verify_name ==0}>_no<{/if}>" title="企业认证"></i>
+                    <i class="level_ico level_ico4<{if $item.is_vip == 0}>_no<{/if}>" title="优惠保障计划"></i>
+                    <i class="level_ico level_ico5<{if $item.xiaobao <=0}>_no<{/if}>" title="缴纳保证金<{$item.xiaobao}>元"></i>
+                    <a target="_blank" title="设计方案"><i class="level_ico level_ico6<{if $item.case_num <= 0 }>_no<{/if}>"></i><em><{if $item.case_num <= 0 }>0<{else}><{$item.case_num}><{/if}>套</em></a>
+                    <i class="level_ico level_ico7<{if $item.site_num <= 0 }>_no<{/if}>" title="施工案例"></i><em><{$item.site_num}>个</em>
+                    </div>
+                   <div class="index_gs_address"><em></em><{$request.city.city_name}> · <{$item.addr|cutstr:70}></div>
+                      <div class="index_gs_des"> 
+                          <div class="index_gs_font">
+                                <{calldata mdl="company/fields" city_id=$request.city_id company_id=$item.company_id limit="1" nocache=false}>
+                                      <span><{$item.info|strip_tags|strip|cutstr:200}></span>
+                                      <a href="/company-<{$item.company_id}>.html" target="_blank">[更多]</a>
+                                <{/calldata}>
+                                
+                          </div>
+                          <div class="index_gs_img lt">
+                          		<{calldata mdl="case/case" city_id=$request.city_id company_id=$item.company_id limit="4"}>
+                                <a href="<{link ctl='case:detail' arg0=$item.case_id}>" target="_blank">
+                                    <img src="<{$pager.img}>/<{$item.photo}>"  alt="<{$item.title}>" width="150" height="110">
+                                    <span class="index_gs_img_tit"><span><{$item.title|cutstr:21}></span></span>
+                                    <span class="index_gs_imgie"></span>
+                                </a>
+                                <{/calldata}>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+            <{/KT}>
+        </div>
+        <div class="index_gs_rt">
+            <div class="index_paih to_cont_rt to_paih rt">
+                <p class="tit">
+                    <a href="javascript:;" class=" first on">帮我找公司</a>
+                    <a href="javascript:;" >最佳口碑榜</a>
+                </p>
+                <div class="index_paihang to_paihang">
+                    <ul class="pding paihang">
+                    	<p class="zxgs_helpMe_txt">简单4步轻松搞定装修公司</p>
+                        <div class="zxgs_helpMe_flow">
+                            <div><i class="i_img1"></i>看口碑</div>
+                            <div class="zxgs_helpMe_flow_li"><em class="ico_arrows "></em></div>
+                            <div><i class="i_img2"></i>比方案</div>
+                            <div class="zxgs_helpMe_flow_li"><em class="ico_arrows"></em></div>
+                            <div><i class="i_img3"></i>比报价</div>
+                            <div class="zxgs_helpMe_flow_li"><em class="ico_arrows"></em></div>
+                            <div><i class="i_img4"></i>比保障</div>
+                      	</div>
+                  <p class="zxgs_helpMe_txt2">10秒免费登记，坐等装修公司联系您</p>
+                  <form action="<{link ctl='tenders:save' http='base'}>" mini-form='tenders_tzx' id="tenders-tzx" method="post">
+                        <input type="hidden" name="data[from]" value="TZX" />
+                        <input type="hidden" name="data[comment]" value="招标来源于：设计师右边 - 免费设计报价">
+                        <p><input type="text" name="data[contact]" class="text long" placeholder="请输入您的姓名" /></p>
+                        <p><input type="text"  name="data[mobile]" class="text long" placeholder="请输入您的联系方式" /></p>
+                        <p><input type="text" name="data[house_mj]" class="text long" placeholder="请输入装修面积，单位为平米" /></p>
+                        <p><input class="btn_sub_tuan btn" type="submit" value="免费帮您推荐3家公司" /></p>
+                    </form> 
+                    </ul>
+                    <ul class="pding paihang none">
+                        <{calldata mdl="company/company" city_id=$request.city_id order="score:DESC" limit="6"}>
+                        <li>
+                            <div class="lt">
+                                <span class="paihang_num <{if $iteration<=3}> ph_num_cl<{/if}>"><{$iteration}></span>
+                                <a href="<{$item.company_url}>"  title="<{$request.city.city_name}>装修公司 - <{$item.title}>"><img src="<{$pager.img}>/<{$item.thumb}>" /></a>
+                            </div>
+                            <div class="lt text_intro">
+                                <a href="<{$item.company_url}>"  title="<{$request.city.city_name}> - <{$item.title}>"><{$item.name}></a>
+                                <p class="graycl">口碑值：<{$item.score}></p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                        <{/calldata}>
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</div>
+	<!--推荐装修公司结束-->
+	<{*!--找我家设计方案开始-->
+	<div class="mb20">
+        <div class="to_cont_rt rt">
+			<!--中间最新发布订单开始-->
+			<div class="index_new_order">
+				<h2 class="index_tit"><font class="lt">最新招标</font><a href="<{link ctl='tenders' http='base'}>" class="fontcl2 rt">我要申请</a>
+				</h2>
+				<div class="index_nwod_box to_nwod_box">
+					<ul class="index_nwod_list">
+						<{calldata mdl="tenders/tenders" order="dateline" limit="15"}>
+						<li><span><{$item.dateline|format:"m-d"}></span><span><{$item.contact|cutstr:3}></span><span><{$item.type_title}></span><span><{$item.style_title}></span></li>
+						<{/calldata}>
+					</ul>
+				</div>
+			</div>
+			<!--中间最新发布订单结束-->
+		</div>
+		<div class="cl"></div>
+	</div*}>
+    <!--设计师开始-->
+    <div class="mb20">
+    	<h2 class="index_tit hr"><font class="lt"><{$request.city.city_name}>设计师</font>
+			<span class="tit_list lt">更具个性的设计师，更具个性的设计</span><a href="<{link ctl='case'}>" class="rt">更多&gt;&gt;</a>
+		</h2>
+        <div  class="index_sjs lt">
+        	<ul>
+            	<{KT name="仿土巴兔首页优秀设计师" city_id=$request.city_id  limit='10'}>
+            	<li>
+                	<div class="img">
+                    <div class="yuyue_sjs">
+                    <{if $item.group <0}>
+                    <a href="<{link ctl='tenders:fast' arg0=$item.uid http='ajax'}>" mini-width='500' mini-load="立即招标" class="btn_main_big btn le yuyue">立即招标</a>
+                     <{else}>
+                         <a href="<{link ctl='designer:yuyue' arg0=$item.uid http='ajax'}>" mini-width='500' mini-load="免费预约" class="btn_main_big btn yuyue">免费预约</a>
+                     <{/if}>
+                     </div>
+                    <img src="<{$pager.img}>/<{$item.thumb}>" alt="<{$item.name}>">
+                    </div>
+                    <p><a href="<{$item.link}>" target="_blank"><{$item.name}></a></p>
+                    <div class="info"><span class="l"><i class="triangle"></i>案例数：<{$item.case_num}>套</span></div>
+                </li>
+                <{/KT}>
+            </ul>
+        </div>
+        <div class="index_sjs_rt">
+        	<div class="orders-nav">
+                <a href="javascript:;" class="first on">免费设计报价</a>
+                <a href="javascript:;" >免费审核预算 </a>
+              </div>
+              <div class="index_paihang to_paihang">
+                <ul class="pding paihang">
+                    <p class="text_title">免费领取装修设计<br>4份设计方案，更多选择让家更美</p>
+                    <form action="<{link ctl='tenders:save' http='base'}>" mini-form='tenders_tzx' id="tenders-tzx" method="post">
+                        <input type="hidden" name="data[from]" value="TZX" />
+                        <input type="hidden" name="data[comment]" value="招标来源于：设计师右边 - 免费设计报价">
+                        <p><input type="text" name="data[contact]" class="text long" placeholder="请输入您的姓名" /></p>
+                        <p><input type="text"  name="data[mobile]" class="text long" placeholder="请输入您的联系方式" /></p>
+                        <p><input type="text" name="data[house_mj]" class="text long" placeholder="请输入装修面积，单位为平米" /></p>
+                        <p><input class="btn_sub_tuan btn" type="submit" value="免费发布招标" /></p>
+                        <p class="chenggong">已有<b><{$COUNT.tenders * 3}></b>人获取了装修设计方案</p>
+                    </form>
+                </ul>
+                <ul class="pding paihang none">
+                <p class="text_title">不用害怕合同陷阱<br>专业监理帮你审核报价,找出问题</p>
+                <form action="<{link ctl='tenders:save' http='base'}>" mini-form='tenders_tzx' id="tenders-tzx" method="post">
+                        <input type="hidden" name="data[from]" value="TZX" />
+                        <input type="hidden" name="data[comment]" value="招标来源于：设计师右边 - 免费审核预算">
+                        <p><input type="text" name="data[contact]" class="text long" placeholder="请输入您的姓名" /></p>
+                        <p><input type="text"  name="data[mobile]" class="text long" placeholder="请输入您的联系方式" /></p>
+                        <p>
+                            <select name="data[budget_id]" class="text long">
+                            <option value="">请选择您的预算范围</option>
+                            <{widget id="tenders/setting" type="budget"}>
+                            </select>
+                        </p>
+                        <p><input class="btn_sub_tuan btn" type="submit" value="免费发布招标" /></p>
+                        <p class="chenggong">已有<b><{$COUNT.tenders * 3 + 17}></b>人获取了免费审核预算</p>
+                    </form>
+                </ul>
+              </div>
+        </div>
+    	<div class="cl"></div>
+    </div>
+	<!--设计师结束-->
+	<div class="mb20"><{adv id="4" name="网站首页 - 新闻上方通栏广告A1" city_id=$request.city_id}></div>
+	<!--热点新闻开始-->
+	<div class="mb20">
+		<h2 class="index_tit"><font class="lt">热点新闻</font><a href="<{link ctl='article'}>" class="rt">更多>></a>
+		</h2>
+		<div class="cl"></div>
+		<div class="to_cont_lt lt">
+			<div class="to_news_ad lt">
+				<a href="" target="_blank" class="index_hotNews_person">
+					<div class="index_hotNews_person_img">
+						<img src="/themes/duihua.jpg" alt="秒懂装修合同" data-original="/themes/duihua.jpg" class="lazy" style="display: block;">
+					</div>
+					<div class="index_hotNews_person_layer">
+					  <span></span>
+					  <div class="index_hotNews_person_num">
+						<i></i>
+						<em class="index_hotNews_person_num3"></em>
+						<em class="index_hotNews_person_num3"></em>
+					  </div>
+					  <h3 title="秒懂装修合同">秒懂装修合同</h3>
+					  <p class="index_hotNews_person_text" title="装修合同是整个家庭装修中最重要的书面文本，但是很多业主由于签订合同时指定和审核缺乏经验，很容易就陷入装修公司的陷阱。为了避免装修过程中发生纠纷，业主在审核装修合同时一定要谨慎重视，本期装修的秘密就来告诉你签订装修合同需要注意的6大事项。">装修合同是整个家庭装修中最重要的书面文本，但是很多业主由于签订 ...</p>
+					  <p>装修网</p>
+					</div>
+				</a>
+				<{adv name="仿土巴兔模板首页热点新闻的图片广告" city_id=$request.city_id}>
+			</div>
+			<div class="to_news_list lt">
+				<ul>
+					<{KT name="仿土巴兔首页热点新闻" city_id=$request.city_id limit=4}>
+					<li>
+						<h3><a href="<{link ctl='article:detail' arg0=$item.article_id}>" title="<{$item.title}>"><{$item.title|cutstr:40}></a>
+						</h3>
+						<p class="graycl"><{$item.desc|cutstr:300}></p>
+					</li>
+					<{/KT}>
+				</ul>
+			</div>
+		</div>
+		<div class="to_cont_rt1 rt">
+			<h2 class="index_tit"><font class="lt">本地新闻</font></h2>
+			<ul class="to_news_right">
+				<{calldata mdl="company/news" city_id=$request.city_id order="views:DESC" limit="6"}>
+				<li><a href="<{link ctl='news:detail' arg0=$item.news_id}>" title="<{$item.title}>"><{$item.title}></a>
+				</li>
+				<{/calldata}>
+			</ul>
+		</div>
+		<div class="cl"></div>
+	</div>
+	<!--热点新闻结束-->
+</div>
+<div class="link-tabs">
+    <div class="link-wrap">
+    	<div class="link-tab-name"><a href="javascript:;"  class=" first">友情链接</a>
+		<a href="javascript:;"  class="">推荐城市</a></div>
+        <div class="index_paihang link-items">
+        <ul class="pding paihang">
+            <{calldata mdl='market/links' city_id=$request.city_id limit="500"}>
+            <li><a href="<{$item.link}>" target="_blank" title="<{$item.title}>"><{$item.title}></a></li>
+            <{/calldata}>
+            <div class="cl"></div>
+        </ul>
+		<ul class="pding paihang none">
+            <{foreach $city_list as $item}>
+                <{if $item.audit==1 && $item@index<20}>
+                    <li><a href="<{$item.siteurl}>" title="<{$item.city_name}>"><{$item.city_name}></a></li>
+                <{/if}>
+			<{/foreach}>
+            <div class="cl"></div>
+        </ul>
+        </div>
+    </div>
+</div>	
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("#box_close").click(function(){
+		$("#translucence_layer").css("display","none");
+		$("#window_box").css("display","none");
+	});
+
+	$("#act2").click(function(){
+		$("#act1").removeClass();
+		$(this).addClass("active");
+		$("#acti1").css("display","none");
+		$("#acti2").css("display","block");
+	});
+
+	$("#act1").click(function(){
+		$("#act2").removeClass();
+		$(this).addClass("active");
+		$("#acti1").css("display","block");
+		$("#acti2").css("display","none");
+
+	});
+
+	//首页装修公司排行
+		$(".index_paih p.tit a").mouseover(function(){
+			var index=$(this).index();
+				 $(".index_paih p.tit a").each(function(a){	
+					if(a == index){
+						$(this).addClass('current');
+						$('.index_paih .index_paihang').find('ul').eq(a).show();
+					}
+					else{
+						 $(this).removeClass('current');
+						 $('.index_paih .index_paihang').find('ul').eq(a).hide();
+					 }
+				 })				   
+	  		 });
+			 $(".index_paih p.tit a").eq(0).mouseover();	
+	$(".orders-nav a").mouseover(function(){
+			var index=$(this).index();
+				 $(".orders-nav a").each(function(a){	
+					if(a == index){
+						$(this).addClass('on');
+						$('.index_sjs_rt .index_paihang').find('ul').eq(a).show();
+					}
+					else{
+						 $(this).removeClass('on');
+						 $('.index_sjs_rt .index_paihang').find('ul').eq(a).hide();
+					 }
+				 })				   
+	  		 });				   
+		$(".orders-nav a").eq(0).mouseover();
+
+	$(".link-tab-name a").mouseover(function(){
+			var index=$(this).index();
+				 $(".link-tab-name a").each(function(a){	
+					if(a == index){
+						$(this).addClass('active');
+						$('.link-items').find('ul').eq(a).show();
+					}
+					else{
+						 $(this).removeClass('active');
+						 $('.link-items').find('ul').eq(a).hide();
+					 }
+				 })				   
+	  		 });				   
+		$(".link-tab-name a").eq(0).mouseover();
+
+	$(".index_nwod_list li:odd").addClass('grayBg');	
+	$(function(){
+		$("div.to_nwod_box").myScroll({
+			speed:500, //数值越大，速度越慢
+			rowHeight:41 //li的高度
+		});
+	});		
+});
+</script>
+<{include file="block/footer.html"}>

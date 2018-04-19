@@ -1,0 +1,130 @@
+<div class="fang_banner">
+	<div class="lt fb_silde">
+		<ul class="fb_silde_chose lt" >
+			<li class="on"> <span class="slideIcon slideIcon1"></span>
+				<p>免费招标</p>
+			</li>
+			<li> <span class="slideIcon slideIcon2"></span>
+				<p>免费验房</p>
+			</li>
+			<li> <span class="slideIcon slideIcon3"></span>
+				<p>免费设计</p>
+			</li>
+			<li> <span class="slideIcon slideIcon4"></span>
+				<p>免费监理</p>
+			</li>
+		</ul>
+		<div class="fb_silde_content lt">
+			<h3>免费发布您的招标信息</h3>
+			<p class="text">发布您的招标信息可享受现金优惠，还可以免费得到三套设计方案。</p>
+			<form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form1' mini-form='tenders-form1' method="post">
+				<input type="hidden" name="data[from]" value="TZX" />
+				<dl>
+					<dt>您的姓名：</dt>
+					<dd>
+						<input type="text" name="data[contact]" class="text" placeholder="请输入您的姓名"/>
+					</dd>
+					<dt>您的电话：</dt>
+					<dd>
+						<input type="text" name="data[mobile]" class="text" placeholder="请输入您的电话"/>
+					</dd>
+				</dl>
+				<input type="submit" value="免费申请" mini-tenders="tenders-form1" class="btn_sub_big btn" />
+				<p class="tel">咨询热线：<{$CONFIG.site.phone}></p>
+			</form>
+		</div>
+		<div class="fb_silde_content none lt">
+			<h3>免费验房服务</h3>
+			<p class="text">免费上门服务，按照国家标准严格验收。无需支付任何费用，验房机构免费上门验房！</p>
+			<form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form2' mini-form='tenders-form2' method="post">
+				<input type="hidden" name="data[from]" value="TZX" />
+				<dl>
+					<dt>您的姓名：</dt>
+					<dd>
+						<input type="text" name="data[contact]" class="text" placeholder="请输入您的姓名"/>
+					</dd>
+					<dt>您的电话：</dt>
+					<dd>
+						<input type="text" name="data[mobile]" class="text" placeholder="请输入您的电话"/>
+					</dd>
+				</dl>
+				<input type="submit" value="免费申请" mini-tenders="tenders-form2" class="btn_sub_big btn" />
+				<p class="tel">咨询热线：<{$CONFIG.site.phone}></p>
+			</form>
+		</div>
+		<div class="fb_silde_content none lt">
+			<h3>申请免费设计</h3>
+			<p class="text">装修公司免费上门测量，3天出设计方案。只提供适合您家的平面方案，让您选择适合自己的方案</p>
+			<form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form3' mini-form='tenders-form3' method="post">
+				<input type="hidden" name="data[from]" value="TZX" />
+				<dl>
+					<dt>您的姓名：</dt>
+					<dd>
+						<input type="text" name="data[contact]" class="text" placeholder="请输入您的姓名"/>
+					</dd>
+					<dt>您的电话：</dt>
+					<dd>
+						<input type="text" name="data[mobile]" class="text" placeholder="请输入您的电话"/>
+					</dd>
+				</dl>
+				<input type="submit" value="免费申请" mini-tenders="tenders-form3" class="btn_sub_big btn" />
+				<p class="tel">咨询热线：<{$CONFIG.site.phone}></p>
+			</form>
+		</div>
+		<div class="fb_silde_content none lt">
+			<h3>免费施工监理</h3>
+			<p class="text">专业资深监理师多次亲临现场为你的装修把关，若不符合工程规范，责令装修公司整改直至符合规范为止。</p>
+			<form action="<{link ctl='tenders:save' http='base'}>" id='tenders-form4' mini-form='tenders-form4' method="post">
+				<input type="hidden" name="data[from]" value="TZX" />
+				<dl>
+					<dt>您的姓名：</dt>
+					<dd>
+						<input type="text" name="data[contact]" class="text" placeholder="请输入您的姓名"/>
+					</dd>
+					<dt>您的电话：</dt>
+					<dd>
+						<input type="text" name="data[mobile]" class="text" placeholder="请输入您的电话"/>
+					</dd>
+				</dl>
+				<input type="submit" value="免费申请" mini-tenders="tenders-form4" class="btn_sub_big btn" />
+				<p class="tel">咨询热线：<{$CONFIG.site.phone}></p>
+			</form>
+		</div>
+	</div>
+	<div class="lt fb_box"> <{adv name="红色齐家模板首页导航下的轮播广告" city_id=$request.city_id}> </div>
+	<div class="rt fb_zgs">
+		<ul>
+			<li> <a target="_blank" href="<{link ctl="passport"}>"> <span class="zcf1"></span> <b>会员注册</b> <em>快速成为<{$CONFIG.site.title}>会员</em> </a> </li>
+			<li> <a target="_blank" href="<{link ctl="passport:reg"}>"> <span class="zcf2"></span> <b>会员登录</b> <em><{$CONFIG.site.title}>会员登录</em> </a> </li>
+			<li> <a target="_blank" href="<{link ctl="zxb"}>"> <span class="zcf3"></span> <b>申请装修保</b> <em>申请<{$CONFIG.site.title}>装修保</em> </a> </li>
+			<li> <a target="_blank" href="<{link ctl="passport"}>"> <span class="zcf4"></span> <b>申请装修公司</b> <em>申请成为装修公司</em> </a> </li>
+			<li> <a target="_blank" href="<{link ctl="passport"}>"> <span class="zcf5"></span> <b>申请设计师</b> <em>申请成为设计师</em> </a> </li>
+		</ul>
+	</div>
+	<div class="cl"></div>
+</div>
+<script type="text/javascript">
+
+ $(".fb_silde .fb_silde_chose li").mouseover(function(){
+    var index=$(this).index();
+         $(".fb_silde .fb_silde_chose li").each(function(a){    
+            if(a == index){
+                $(this).addClass('on');
+				$(this).find('.slideIcon').css('background-position-x','0px');
+                $('.fb_silde').find('.fb_silde_content').eq(a).show();
+            }
+            else{
+                 $(this).removeClass('on');
+				 $(this).find('.slideIcon').css('background-position-x','-47px');
+                 $('.fb_silde').find('.fb_silde_content').eq(a).hide();
+             }
+         })                
+     });                   
+$(".fb_silde .fb_silde_chose li").eq(0).mouseover();
+	
+</script> 
+<script>
+$("[verify]").click(function(){
+	$($(this).attr("verify")).attr("src", "index.php?magic-verify&_"+Math.random());
+});
+</script> 

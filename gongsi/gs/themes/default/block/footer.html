@@ -1,0 +1,109 @@
+	<div class="main_footer">
+	<div class="main_footer_top">
+	<style>
+.footer-tel .tel{
+    color: #bcbcbc;
+    font-size: 24px;
+}
+.footer-tel .work-time{
+    font-size: 12px;
+    color: #a6a9a8;
+    text-align:center;
+}
+.footer-tel .service_qq{ 
+    display: block;
+    width: 140px;
+    margin: 10px auto;
+    line-height: 30px;
+    text-align: center;
+    background:#{$base-color};
+    color:#fff;
+}
+.footer-tel .service_qq:hover{
+    background-color: #{$hover-color};
+    color: #fff;
+}
+.footer-tel .service_qq {
+    display: block;
+    width: 140px;
+    margin: 10px auto;
+    line-height: 30px;
+    text-align: center;
+    background: #ff9c00;
+    color: #fff;
+}
+.footer-tel .service_qq:hover {
+    background-color: #ff500b;
+    color: #fff;
+}
+.waps{
+	width: 100px;
+    background: #545353;
+    height: 50px;
+    display: inline-block;
+    margin-left: 4px;
+    border-radius: 3px;
+    margin-top: 5px;
+    padding-left: 28px;
+    line-height: 50px;
+	text-align: center;
+}
+.icon111 {
+    background: url(/themes/default/static/images/icon_common_bg.png);
+    display: inline-block;
+}
+.zxbiao111 {
+    width: 48px;
+    height: 48px;
+    background-position: -40px 0px;
+}
+.footer-m span {
+    margin-left: 10px;
+    vertical-align: top;
+    color: #bcbcbc;
+    font-size: 12px;
+    line-height: 24px;
+    display: inline-block;
+}
+.footer-m {
+    padding: 26px;
+    width: 270px;
+}
+	</style>
+		<div class="mainwd">
+			<{calldata mdl="article/cate" parent_id="2" limit=10}>
+			<ul>
+				<li><span><{$item.title}></span></li>
+				<{calldata mdl='article/article' from="help" hidden="0" cat_id=$item.cat_id}>
+				<li><a href="<{$item.link}>"><{$item.title}></a></li>
+				<{/calldata}>
+			</ul>
+			<{/calldata}>
+			<ul>
+				<li><span>手机客户端</span></li>
+				<li><a href="<{link ctl="app"}>" class="index_ico dowload_ico"></a></li>
+				<li><a href="<{link ctl="mobile"}>" class="waps">WAP手机站</a></li>
+			</ul>
+
+			<div class="footer-m clearfix1 fl" style="float:left;">
+		<i class="icon111 zxbiao111"></i><span>【<{$CONFIG.site.title}>】<br>
+		让您的装修更轻松！</span>
+	</div>
+
+			<div class="footer-tel fl" style="float:right;">
+		<dl>
+			<dt class="tel"><{$CONFIG.site.phone}></dt>
+			<dd class="work-time">周一至周日：9:00--18:00</dd><dd>
+			<{foreach explode(',', $CONFIG.site.kfqq) as $qq}><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=<{$qq}>&site=<{$CONFIG.site.domain}>&menu=yes" title="<{$CONFIG.site.title}>" class="service_qq contact-tobosu-qq">联系在线客服</a><{/foreach}>
+			</dd>
+		</dl>
+	</div>
+		</div>
+	</div>
+	<div class="cl"></div>
+    <{include file="block/sfooter.html"}>
+</div>
+<!--底部内容结束-->
+<{widget id="public/kefu"}>
+</body>
+</html>

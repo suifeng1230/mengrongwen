@@ -1,0 +1,20 @@
+<div class="sub_footer">
+    <p><{calldata mdl="article/article" city_id=$request.city_id from='about' limit="6"}><a href="<{link ctl='about' arg0=$item.page}>"><{$item.title}></a> <{if !$last}>|<{/if}> <{/calldata}></p>
+		<p>免责声明：本网站部分内容由用户自行上传，如权利人发现存在侵犯其权益情形，请及时与本站联系。</p>
+		<p>© 2017 new.fujuzx.com 装修网 ·博虎网络 保留所有权利.  ICP备案：<{$CONFIG.site.icp}></p>
+    <p><span class="main_footer_bm_ico index_ico"></span></p>
+</div>
+<!--底边内容结束-->
+<{widget id="public/kefu"}>
+<link rel="stylesheet" href="<{$pager.res}>/script/bxslider/jq.bxslider.css" type="text/css" />
+<script type="text/javascript"  src="<{$pager.res}>/script/bxslider/jq.bxslider.min.js"></script>
+<script type="text/javascript">
+(function(K, $){
+$(document).ready(function(){
+    $('[bxSlider]').bxSlider({ mode: 'fade',captions: true, auto:true});
+});
+})(window.KT, window.jQuery);
+</script>
+<p class="none"><{$CONFIG.site.tongji}></p>
+</body>
+</html>

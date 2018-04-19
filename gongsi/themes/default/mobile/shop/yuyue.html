@@ -1,0 +1,27 @@
+<{assign var="tpl_page_title" value="预约商铺"}>
+<{include file="mobile/block/header.html"}>
+<div class="pding">
+	<h2 class="nowrap mb10">商铺：<{$shop.name}> </h2>
+	<form action="<{link ctl='mobile/shop:yuyue'}>" method="post" mini-form="produt_yuyue" class="tenders">
+        <input type="hidden" name="shop_id" value="<{$shop.shop_id}>" />
+		<input type="text" name="data[contact]" value="<{$pager.contact}>" class="text full" placeholder="您的姓名" />
+		<input type="text" name="data[mobile]" value="<{$pager.mobile}>" class="text full" placeholder="联系方式" />
+		<input type="submit" class="btn mainbtn_full" value="立即申请 " />
+	</form>
+</div>
+      <div class="chat">
+    <a href='http://wpa.qq.com/msgrd?v=3&amp;uin=<{$gz.qq}>&amp;site=qq&amp;menu=yes'>
+        <img src="%THEME%/mobile/static/images/chat.gif" alt="">
+    </a><br/>
+    <a href='tel:<{$gz.mobile}>'>
+        <img src="%THEME%/mobile/static/images/phone.gif" alt="">
+    </a>
+</div>
+<style>
+	.chat{position: fixed;top: 62%;right: 0;z-index: 22;display: block;}
+	.chat a{    margin: 10px 2px 0 0;   float: left}
+	.chat img{width:56px;}
+</style>
+<{include file="mobile/block/sfooter.html"}>
+</body>
+</html>

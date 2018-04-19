@@ -1,0 +1,204 @@
+<{include file="mobile/block/header.html"}>
+<!--头部内容结束-->
+<!--面包屑导航开始-->
+<style>
+	.tenders_box{width:100%;position: relative;background: #fff;height: 100%;overflow: hidden;color: #333;}
+	.tenders_box .zb_box{width:100%;}
+	.zb_box_top{background: #f3f3f3;width: 100%;float: left;}
+	.zb_box_lt{float: left;text-align: center;margin: 15px;}
+	.zb_box_lt p.num{color:#fff;background: #fca404;padding: 2px 8px;border-radius: 5px 5px 0 0;border: 1px solid rgba(255, 0, 0, 0.1);box-shadow: rgba(255, 57, 57, 0.7) 0px 0px 10px;}
+	.zb_box_lt p.num1{border:1px solid #ddd;border-top: none;border-radius: 0 0 5px 5px;padding: 2px 0;}
+	.zb_box_lt p.num1 b{color: red;}
+	.zb_box_ct{float: left;margin: 10px 0;}
+	h1{font-weight: bold;line-height: 24px;font-family: 微软雅黑;}
+	.zb_box_ct p{color: #999;font-size: 12px;}
+	.zb_box_rt{display:block;padding: 40px 30px;margin: 0 15px;transform: skew(-45deg);float: right;box-shadow: rgba(0, 0, 0, 0.6) 2px -1px 5px;}
+	.bg{background:#fe7902;}
+	.bg1{background:#999999;}
+	.zb_box_rt2{transform: skew(45deg);}
+	.font1{display: block;width: 14px;transform: rotate(45deg);position: absolute;right: -5PX;top: -36px;color: #fff;}
+	.font2{display: block;width: 14px;transform: rotate(45deg);position: absolute;right: -5PX;top: -27px;color: #fff;}
+	.zb_box_body{padding: 0 2%;}
+	.zb_box_body p{border-bottom: 1px dashed #dedede;margin: 12px;line-height: 12px;height: 22px;}
+	.jb_box{margin-top:15px;background: #f3f3f3;}
+	.jb_box ul li{position: relative;}
+	.jb_box_tit{background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(#ccc), to(#f3f3f3));float: left;width: 100%;}
+	.jb_box_tit .tit1{line-height: 32px; height: 32px;margin-left: 10px;}
+	.jb_box_tit .tit2{background: #fe7902;color: #fff;float: right;font-weight: normal;margin: 5px 10px;font-size: 14px;line-height: 12px;padding: 5px;border-radius: 5px;border: 1px solid rgba(255, 0, 0, 0.1);box-shadow: rgba(255, 57, 57, 0.7) 0px 0px 10px;}
+	.jb_box_body{float:left;width: 100%;position: relative;overflow: hidden; background: #f3f3f3;}
+	.jb_box_body1{margin: 2%; border: 1px solid #dbdbdb;padding-bottom: 2%;}
+	.jb_box_body_lt{float: left; width: 40%;overflow: hidden;}
+	.jb_box_body_lt img{width: 90%;margin: 5%;}
+	.jb_box_body_rt{float: left;margin: 8px 0;width: 60%;}
+	.jb_box_body_rt span{display: block;line-height: 22px;}
+	.name{font-size: 16px;font-weight: bold;line-height: 24px;margin-bottom: 5px;}
+	.jb_box_body .jb_box_body1 .liuyan{float:left;width: 96%;position: relative;background: #fff;    margin: 0 2%;    padding: 2% 0;    line-height: 22px;background: #eee; border-top: 1px solid #e7e7e7;}
+	.liuyan	p{ margin: 0 5px 0 5px;}
+	.zhongbiao{border-radius: 5px; border: 1px solid #333; box-shadow: #666 0px 0px 10px; background: #444; color: #fcfdf3; padding: 1px 8px; line-height: 24px; margin: 3px 2px;}
+	.zhongbiaoimg{    position: absolute;    right: 8%;    top: 30%;}
+</style>
+<!--面包屑导航结束-->
+<!--主体左边内容开始-->
+<div class="tenders_box">
+	<div class="zb_box">
+		<div class="zb_box_top">
+			<div class="zb_box_lt">
+				<p class="num">招标数</p>
+				<p class="num1"><b><{$detail.looks}></b><span>位</span></p>
+			</div>
+			<div class="zb_box_ct">
+				<h1><{$detail.title}></h1>
+				<p><span>发布者：<{$detail.contact}></span></p>
+				<p ><span>发布时间：<{$detail.dateline|format}></span></p>
+			</div>
+			<{if $detail.sign_uid}>
+			<div class='zb_box_rt bg1'>
+				<div class="zb_box_rt2">
+					<span class='font1'>招标结束</span>
+				</div>
+			</div>
+			<{else}>
+			<div class='zb_box_rt bg'>
+				<div class="zb_box_rt2">
+					<span class="font2">招标中</span>
+				</div>
+			</div>
+			<{/if}>
+		</div>
+		<div class="cl"></div>
+		<div class="zb_box_body">
+			<p>招标方式：<{$detail.way_title}></p>
+			<p>招标类型：<{$detail.type_title}></p>
+			<p>服务需求：<{$detail.service_title}></p>
+			<p>装修风格：<{$detail.style_title}></p>
+			<p>房屋户型：<span class="pointcl"><{$detail.house_type_title}></span></p>
+			<p>预算总价：<span class="pointcl"><{$detail.budget_title}></span></p>
+			<p>所在区域：<{$detail.city_name}> <{$detail.area_name}></p>
+			<{if $detail.home_name}>
+			<p>小区名称：<{$detail.home_name}></p>
+			<{/if}>
+			<{if $detail.addr}>
+			<p>详细地址：<{$detail.addr}></p>
+			<{/if}>
+			<p>建筑面积：<span class="pointcl"><{$detail.house_mj}>平米</span></p>
+			<{if $detail.zx_time}>
+			<p>装修时间：<{$detail.zx_time|format:'Y-m-d'}></p>
+			<{/if}>
+			<p>具体要求：<{$detail.comment}></p>
+		</div>
+	</div>
+	<div class="jb_box">
+		<h3 class="jb_box_tit">
+			<span class="tit1 lt">参与竞标公司</span>
+			<a href="<{link ctl='tenders:look' arg0=$detail.tenders_id http='ajax'}>" mini-load="立即投标" mini-width="400" class="tit2">我要投标</a>
+		</h3>
+		<ul class="jb_box_body">
+			<{foreach $look_list as $item}>
+			<li>
+				<{if $member_list[$item.uid].from == 'company'}>
+				<div class="jb_box_body1">
+					<div class="jb_box_body_lt">
+						<img src="<{$pager.img}>/<{$company_list[$item.uid].thumb}>" class="face" />
+					</div>
+					<div class="jb_box_body_rt">
+						<p class="name"><{$company_list[$item.uid].name}></p>
+						<p class="item">
+							<span>投标次数：<font class="fontcl2"><{$company_list[$item.uid].tenders_num}></font></span>
+							<span style='display: -webkit-box;'>投标时间：<{$item.dateline|format}></span>
+							<span>信誉：<{$company_list[$item.uid].score}></span>
+							<span>中标次数：<font class="font12"><{$company_list[$item.uid].tenders_sign}></font></span>
+							<{if !$detail.sign_uid && $detail.uid == $MEMBER.uid}>
+							<span>
+								业主评标：<a href="#" class="zhongbiao">中标</a>
+							</span><{/if}>
+						</p>
+					</div>
+					<div class="liuyan">
+						<p>留言：<{$item.content}></p>
+					</div>
+					<div class="cl"></div>
+				</div>
+				<{/if}>
+				<{if $member_list[$item.uid].from == 'shop'}>
+				<div class="jb_box_body1">
+					<div class="jb_box_body_lt">
+						<img src="<{$pager.img}>/<{$shop_list[$item.uid].logo}>" class="face" />
+					</div>
+					<div class="jb_box_body_rt">
+						<p class="name">投标者：<{$shop_list[$item.uid].name}></p>
+						<p class="item">
+							<span>投标次数：<font class="fontcl2"><{$shop_list[$item.uid].tenders_num}></font></span>
+							<span style='display: -webkit-box;'>投标时间：<{$item.dateline|format}></span>
+							<span>信誉：<{$shop_list[$item.uid].credits}></span>
+							<span>中标次数：<font class="fontcl2"><{$shop_list[$item.uid].tenders_sign}></font>	</span>
+							<{if !$detail.sign_uid && $detail.uid == $MEMBER.uid}>
+							<span>业主评标：<a href="#" class="zhongbiao">中标</a></span>
+							<{/if}>
+						</p>
+					</div>			
+					<div class="liuyan">
+						<p>留言：<{$item.content}></p>
+					</div>
+					<div class="cl"></div>
+				</div>	
+				<{/if}>
+				<{if $member_list[$item.uid].from == 'gz'}>
+				<div class="jb_box_body1">
+					<div class="jb_box_body_lt">
+						<img src="<{$pager.img}>/<{$member_list[$item.uid].face_80}>" class="face" />
+					</div>
+					<div class="jb_box_body_rt">
+						<p class="name"><{$gz_list[$item.uid].name}></p>
+						<p class="item">
+							<span>投标次数：<font class="fontcl2"><{$gz_list[$item.uid].tenders_num}></font></span>
+							<span style='display: -webkit-box;'>投标时间：<{$item.dateline|format}></span>
+							<span>信誉：<{$gz_list[$item.uid].credits}></span>
+							<span>中标次数：<font class="fontcl2"><{$gz_list[$item.uid].tenders_sign}></font></span>
+							<{if !$detail.sign_uid && $detail.uid == $MEMBER.uid}>
+							<span>业主评标：<a href="#" class="zhongbiao">中标</a></span>
+							<{/if}>
+						</p>
+					</div>
+					<div class="liuyan">
+						<p>留言：<{$item.content}></p>
+					</div>
+					<div class="cl"></div>
+				</div>
+				<{/if}>
+				<{if $member_list[$item.uid].from == 'designer'}>
+				<div class="jb_box_body1">
+					<div class="jb_box_body_lt">
+						<img src="<{$pager.img}>/<{$member_list[$item.uid].face_80}>" class="face" />
+					</div>
+					<div class="jb_box_body_rt">
+						<p class="name"><{$designer_list[$item.uid].name}></p>
+						<p class="item">
+							<span>投标次数：<font class="fontcl2"><{$designer_list[$item.uid].tenders_num}></font></span>
+							<span style='display: -webkit-box;'>投标时间：<{$item.dateline|format}></span>
+							<span>信誉：<{$designer_list[$item.uid].credits}></span>
+							<span>中标次数：<font class="fontcl2"><{$designer_list[$item.uid].tenders_sign}></font></span>
+							<{if !$detail.sign_uid && $detail.uid == $MEMBER.uid}>
+							<span>业主评标：<a href="#" class="zhongbiao">中标</a></span>
+							<{/if}>
+						</p>
+					</div>
+					<div class="liuyan">
+						<p>留言：<{$item.content}></p>
+					</div>
+					<div class="cl"></div>
+				</div>
+				<{/if}>
+				<{if $detail.sign_uid == $item.uid}>
+				<div class="zhongbiaoimg"><img src="%THEME%/static/images/tender_zb.png" /></div>
+				<{/if}>
+			</li>
+			<{/foreach}>
+		</ul>
+	</div>
+</div>
+<!--主体左边内容结束-->
+<!--主体右边内容开始-->
+<div class="cl"></div>
+<!--主体右边内容结束-->
+<!--底边内容开始-->
+<{include file="mobile/block/footer.html"}>

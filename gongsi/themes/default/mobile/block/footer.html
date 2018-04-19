@@ -1,0 +1,69 @@
+</div>
+<div class="tender">
+  <!--  <div class="tender_cont">
+        <h2 class="lt"><span class="app_ico tel_ico"></span><b><a href="tel:<{$CONFIG.site.phone}>"><{$CONFIG.site.phone}></a></b></h2>
+        <a href="<{link ctl='mobile/tenders'}>" class="rt mainbtn btn">立即招标<{$pager['tender_hide']}></a>
+    </div>-->
+	<style>
+	.tender ul{width:100%;position:relative;}
+	.tender ul li{width:33.333333%;float: left;text-align: center;}
+	.tender ul li .footico1{background:url(%THEME%/mobile/static/images/btn-tabs_01.png) no-repeat;background-size:100%; padding: 0 10px;}
+	.tender ul li .footico2{background:url(%THEME%/mobile/static/images/btn-tabs_05.png) no-repeat;background-size:100%; padding: 0 10px;}
+	.tender ul li .footico3{background:url(%THEME%/mobile/static/images/btn-tabs_06.png) no-repeat;background-size:100%; padding: 1px 10px;}
+	.tender ul li .footico4{background:url(%THEME%/mobile/static/images/ser.png) no-repeat;background-size:100%; padding: 0 10px;}
+	.tender ul li .footico5{background:url(%THEME%/mobile/static/images/btn-tabs_03.png) no-repeat;background-size:100%; padding: 0 10px;}
+	.tender ul li p{line-height: 10px;color: #808080;}
+	.tender .share{width:10%;float:right;text-align: center;height: 100%;}
+	.tender .share img{width: 100%;height: 100%;}
+	.tender .share .shareico{background:url(%THEME%/mobile/static/images/share2.png) no-repeat;background-size:100%;    padding: 2px 25px 22px 8px;}
+	</style>
+	<script>
+			$(function (){
+			$('.tender ul li').click(function (){
+				//把之前已有的active去掉
+				$('.active').removeClass('active');
+				//当前点击的li加上class
+				$(this).addClass("active");
+		 
+			});
+		})
+	</script>
+	<ul>
+		<li class='active'>
+			<a href='/mobile/index.html'><span class='footico1'></span>
+			<p>首页</p></a>
+		</li>
+	<li>
+			<a href='/mobile/trade/cart.html'><span class='footico2'></span>
+			<p>购物车</p></a>
+		</li> 
+		<li>
+			<a href='/mobile/ucenter.html'><span class='footico3'></span>
+			<p>用户中心</p></a>
+		</li>
+		<!--	<li>
+			<a href='/mobile/index.html'><span class='footico4'></span>
+			<p>附近</p></a>
+		</li>
+		<li>
+			<a href='/mobile/index.html'><span class='footico5'></span>
+			<p>更多</p></a>
+		</li> 
+		<div class="share"><span class='shareico'></span></div>
+		  -->
+	</ul>
+		
+</div>
+<!--<div class="footer">
+	<div class="footer_cont">
+		<p><font class="on">触屏版</font><font class="bgray">|</font><a href="<{link ctl='mobile/index:force' arg0=web}>" >电脑版</a></p>
+		<p><font class="f12">手机版<{$CONFIG.site.title}></font><font class="f12"><{$CONFIG.site.icp}></font></p>
+	</div>
+</div>  -->
+<{include file="mobile/block/sfooter.html"}>
+<{if substr($request.ctl, 0, 14) != 'mobile/ucenter' && !$pager['tender_hide'] && substr($request.ctl, 0, 11) != 'mobile/shop'}>
+<div class="h40"></div>
+
+<{/if}>
+</body>
+</html>

@@ -1,0 +1,100 @@
+2018-04-08 14:19:54Array
+(
+    [7] => Array
+        (
+            [city_id] => 7
+            [province_id] => 1
+            [city_name] => 北京
+            [pinyin] => bj
+            [theme_id] => 51
+            [logo] => photo/201501/20150119_177F1A3A05F5D17662FD84A824A88E0E.png
+            [weixinqr] => 
+            [phone] => 
+            [mobile] => 
+            [mail] => 
+            [kfqq] => 
+            [seo_title] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_keywords] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_description] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [tongji] => 
+            [orderby] => 50
+            [audit] => 1
+            [dateline] => 0
+            [province_name] => 北京
+        )
+
+    [8] => Array
+        (
+            [city_id] => 8
+            [province_id] => 1
+            [city_name] => 上海
+            [pinyin] => sh
+            [theme_id] => 5
+            [logo] => photo/201501/20150119_177F1A3A05F5D17662FD84A824A88E0E.png
+            [weixinqr] => 
+            [phone] => 
+            [mobile] => 
+            [mail] => 
+            [kfqq] => 
+            [seo_title] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_keywords] => 
+            [seo_description] => 
+            [tongji] => 
+            [orderby] => 50
+            [audit] => 0
+            [dateline] => 0
+            [province_name] => 北京
+        )
+
+)
+
+2018-04-08 14:20:02Array
+(
+    [7] => Array
+        (
+            [city_id] => 7
+            [province_id] => 1
+            [city_name] => 北京
+            [pinyin] => bj
+            [theme_id] => 51
+            [logo] => photo/201501/20150119_177F1A3A05F5D17662FD84A824A88E0E.png
+            [weixinqr] => 
+            [phone] => 
+            [mobile] => 
+            [mail] => 
+            [kfqq] => 
+            [seo_title] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_keywords] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_description] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [tongji] => 
+            [orderby] => 50
+            [audit] => 1
+            [dateline] => 0
+            [province_name] => 北京
+        )
+
+    [8] => Array
+        (
+            [city_id] => 8
+            [province_id] => 1
+            [city_name] => 上海
+            [pinyin] => sh
+            [theme_id] => 5
+            [logo] => photo/201501/20150119_177F1A3A05F5D17662FD84A824A88E0E.png
+            [weixinqr] => 
+            [phone] => 
+            [mobile] => 
+            [mail] => 
+            [kfqq] => 
+            [seo_title] => 北京装修网-装修公司-PHP装修系统-博虎家居门户系统
+            [seo_keywords] => 
+            [seo_description] => 
+            [tongji] => 
+            [orderby] => 50
+            [audit] => 0
+            [dateline] => 0
+            [province_name] => 北京
+        )
+
+)
+
